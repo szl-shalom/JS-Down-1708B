@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul> -->
+    <script>
+        var arr = ["北京", "田径", "上海"]
+        // var html = ``
+        // for (var i = 0; i < arr.length; i++) {
+        //     html += `<li>${arr[i]}</li>`
+        // }
+        // document.body.innerHTML = html
+        // [1, 1, 1]
+        var a = arr.map(function (item) {
+            return `<li>${item}</li>`
+        })
+        console.log(a.join(""))
+
+    </script>
+</body>
+
+</html>

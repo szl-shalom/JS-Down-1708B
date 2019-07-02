@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.header ul li {
+    float: left;
+    padding: 20px;
+}
+
+.header ul li.active {
+    background: red;
+}
+
+.header ul li.active1 {
+    background: skyblue;
+}
+
+.header {
+    height: 80px;
+}
+
+.content>div {
+    display: none
+}
+
+.content>.active {
+    display: block;
+}
+
+.content>.active1 {
+    display: block;
+}

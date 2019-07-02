@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+
+<style>
+    p {
+        display: inline-block;
+    }
+</style>
+
+<body>
+
+    <ul>
+        <li>
+            <p>qweqweqwe</p>
+            <p class="del">X</p>
+        </li>
+    </ul>
+
+    <button class="add">新增</button>
+    <button class="delAll">全部删除</button>
+    <script>
+        var ul = document.querySelector("ul"),
+            add = document.querySelector(".add"),
+            delAll = document.querySelector(".delAll")
+
+
+        ul.onclick = function (e) {
+            var tar = e.target
+            if (e.target.className === "del") {
+                tar.parentNode.parentNode.removeChild(tar.parentNode)
+            }
+        }
+
+        add.onclick = function () {
+            var html = ` <li>
+                            <p>qweqweqwe</p>
+                            <p class="del">X</p>
+                        </li>`
+
+            ul.innerHTML += html
+        }
+
+        delAll.onclick = function () {
+            ul.innerHTML = ""
+        }
+
+
+
+    </script>
+</body>
+
+</html>

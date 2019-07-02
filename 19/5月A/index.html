@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5月B</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="left">
+            <div class="every">
+                <img src="./images/1.jpg" alt="">
+                <dl>
+                    <dt>
+                        <img src="./images/1.jpg" alt="">
+                    </dt>
+                    <dd>
+                        <p>我是一个大美女</p>
+                        <span>1771</span>位粉丝
+                        <p>今天天气阳光明媚</p>
+                    </dd>
+                </dl>
+            </div>
+
+
+        </div>
+        <div class="right">
+            <img src="./images/5.jpg" alt="">
+            <div class="top">
+                <span>点赞</span>
+                <span>还可以</span>
+                <span>踩一脚</span>
+                <div class="qwe">
+                    <img src="./images/6.jpg" alt="">
+                    <img src="./images/7.jpg" alt="">
+                    <img src="./images/5.jpg" alt="">
+                </div>
+            </div>
+            <div class="bottom">
+                <div>
+                    <dl>
+                        <dt>
+                            <img src="./images/1.jpg" alt="">
+                        </dt>
+                        <dd>
+                            <span>特朗普:</span>
+                            <span>2020年我要连任!!!</span>
+                        </dd>
+                    </dl>
+                    <div><span>攒</span><button>回复</button></div>
+                    <div>
+                        <dl>
+                            <dt>
+                                <img src="./images/1.jpg" alt="">
+                            </dt>
+                            <dd>
+                                <span>特朗普:</span>
+                                <span>2020年我要连任!!!</span>
+                            </dd>
+                        </dl>
+                        <div><span>攒</span><button>回复</button></div>
+
+                    </div>
+                </div>
+                <div>
+                    <dl>
+                        <dt>
+                            <img src="./images/1.jpg" alt="">
+                        </dt>
+                        <dd>
+                            <span>特朗普:</span>
+                            <span>2020年我要连任!!!</span>
+                        </dd>
+                    </dl>
+                    <div><span>攒</span><button>回复</button></div>
+
+                </div>
+            </div>
+            <input type="text" class="addContent">
+        </div>
+    </div>
+
+    <script src="./js/data.js"></script>
+    <script src="./js/index.js"></script>
+    <script>
+        new Ins({
+            box: ".wrap",
+            leftData: data,
+            rightData: data1,
+            user: user
+        })
+    </script>
+</body>
+
+</html>

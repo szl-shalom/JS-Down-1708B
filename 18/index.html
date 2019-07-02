@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./JS下自测6.25/index.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <input type="text" class="search">
+        <div>
+            <div class="top">
+                <span>1</span>
+                <span>1</span>
+                <span>1</span>
+                <span>1</span>
+            </div>
+            <div class="content">
+                <div class="first">
+                    <!-- <span>123</span>
+                    <span>123</span>
+                    <span>123</span> -->
+                </div>
+                <div class="second">
+                    <!-- <span>123</span>
+                    <span>123</span> -->
+                </div>
+                <div class="third">
+
+
+                </div>
+                <div class="fourth">
+                    <!-- <span>123</span> -->
+                </div>
+
+            </div>
+            <div class="clear"></div>
+            <div class="bottom">
+                <button>确定</button>
+                <button>取消</button>
+            </div>
+        </div>
+    </div>
+    <script src="./JS下自测6.25/data.js"></script>
+
+    <script>
+        var first = document.querySelector(".first")
+        var myTop = document.querySelector(".top")
+        var second = document.querySelector(".second")
+        var third = document.querySelector(".third")
+        var fourth = document.querySelector(".fourth")
+        // 下标
+        var indexFirst = 0
+        myTop.innerHTML = hotJobs.data.map(function (item) {
+            return `<span>${item.name}</span>`
+        }).join("")
+        first.innerHTML = jobs.info.map(function (item, index) {
+            return `<span ind=${index} ${index === 0 ? "class=active" : ""}>${item.name}</span>`
+        }).join("")
+
+        // 给第一层添加事件
+        first.onclick = function (e) {
+            var tar = e.target //获取事件源
+            // 
+            if (tar.nodeName === "SPAN") {
+                var ind = tar.getAttribute("ind")
+                indexFirst = ind
+                console.log(ind)
+                console.log(jobs.info[ind])
+                // 删除原来的类名
+                // first.querySelector(".active") ? first.querySelector(".active").classList.remove("active"):null
+                if (first.querySelector(".active")) {
+                    first.querySelector(".active").classList.remove("active")
+                }
+
+                tar.classList.add("active")
+                second.innerHTML = jobs.info[ind].children.map(function (item, index) {
+                    return `<span ind=${index} ${index === 0 ? "class=active" : ""}>${item.name}</span>`
+                }).join("")
+
+            }
+        }   
+
+        // 给第二层添加事件
+        second.onclick = function (e) {
+            var tar = e.target;
+            if (tar.nodeName === "SPAN") {
+                //  删除原来类名
+                second.querySelector(".active").classList.remove("active")
+                // 修改类名
+                tar.classList.add("active")
+
+                var index = tar.getAttribute("ind")
+
+                var data = jobs.info[indexFirst].children[index].children
+
+                var spans = [...fourth.querySelectorAll("span")]
+                console.log(spans)
+
+                // 渲染
+                third.innerHTML = data.map(function (item) {
+                    var data_id = item.id
+                    var flag = false
+                    spans.forEach(function (item) {
+                        console.log(item.getAttribute("data-id"), data_id.toString())
+                        if (item.getAttribute("data-id") === data_id.toString()) {
+                            flag = true
+                        }
+                    })
+
+                    return ` <p>
+                                <input type="checkbox" ${flag ? "checked" : ""}>
+                                <span data-id = ${item.id}>${item.name}</span>
+                            </p>`
+                }).join("")
+
+            }
+        }
+
+
+
+        // 给第三层添加事件
+        third.onclick = function (e) {
+            var tar = e.target || window.event.srcElement
+            if (tar.tagName === "INPUT") {
+
+                if (tar.checked) {
+                    // 添加
+                    var el = tar.nextElementSibling.cloneNode(true)
+                    el.innerHTML += "<button>x</button>"
+                    fourth.appendChild(el)
+                } else {
+                    // 删除
+                    var data_id = tar.nextElementSibling.getAttribute("data-id")
+                    // console.log(data_id)
+                    var spans = [...fourth.querySelectorAll("span")]
+                    spans.forEach(function (item) {
+                        if (item.getAttribute("data-id") === data_id) {
+                            item.parentNode.removeChild(item)
+                        }
+                    })
+                }
+
+            }
+
+        }
+        // 第四层
+        fourth.onclick = function (e) {
+            var tar = e.target
+            if (tar.nodeName === "BUTTON") {
+                var data_id = tar.parentNode.getAttribute("data-id")
+                var spans = [...third.querySelectorAll("span")]
+                spans.forEach(function (item) {
+                    if (item.getAttribute("data-id") === data_id) {
+                        item.previousElementSibling.checked = false
+                    }
+                })
+                tar.parentNode.parentNode.removeChild(tar.parentNode)
+            }
+        }
+    </script>
+</body>
+
+</html>

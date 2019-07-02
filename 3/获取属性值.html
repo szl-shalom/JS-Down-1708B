@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div qwe="123">
+
+    </div>
+    <script>
+        var div = document.querySelector("div")
+        // 获取属性值
+        // 元素.getAttribute(属性名)
+        var val = div.getAttribute("qwe")
+        console.log(val)
+        // 设置属性值
+        // 元素.setAttribute(属性名,属性值)
+
+        div.setAttribute("tt", "555")
+        // 删除属性
+        // 元素.removeAttibute(属性名)
+        div.removeAttribute("qwe")
+
+    </script>
+</body>
+
+</html>

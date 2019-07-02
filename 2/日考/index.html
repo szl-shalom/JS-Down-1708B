@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <div class="y">
+        <ul>
+            <li>购<span>购物车</span></li>
+            <li>购<span>购物车</span></li>
+            <li>购<span>购物车</span></li>
+            <li>购<span>购物车</span></li>
+            <li>购<span>购物车</span></li>
+            <li>购<span>购物车</span></li>
+            <li>购<span>购物车</span></li>
+        </ul>
+    </div>
+
+    <script>
+        var lis = [...document.querySelectorAll("li")]
+        console.log(lis)
+        lis.forEach(function (item) {
+            item.onmouseover = function () {
+                item.id = "er"
+            }
+
+            item.onmouseout = function () {
+                item.id = ""
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

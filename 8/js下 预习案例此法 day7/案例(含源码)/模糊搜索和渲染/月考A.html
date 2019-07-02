@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background: #666;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        #box {
+            width: 660px;
+            height: 450px;
+            border: 2px solid #999;
+            margin: 30px auto;
+            border-radius: 10px;
+            background: #e4d2d2;
+            overflow-y: scroll
+        }
+
+        .top {
+            height: 70px;
+            position: relative;
+        }
+
+        .top input {
+            width: 350px;
+            height: 45px;
+            border: 1px solid yellow;
+            border-radius: 10px;
+            float: left;
+            margin: 20px 15px 0 15px;
+            outline: none;
+        }
+
+        span {
+            float: left;
+            display: inline-block;
+            width: 65px;
+            height: 45px;
+            border-radius: 10px;
+            border: 1px solid #0bc7b7;
+            margin: 20px 10px;
+            text-align: center;
+            line-height: 45px;
+            color: #0bc7b7;
+        }
+
+        .content {
+            width: 580px;
+            height: 80px;
+            background: #f8f8f8;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        .img {
+            float: left;
+            margin: 10px;
+        }
+
+        .right {
+            width: 470px;
+            float: left;
+            margin-left: 10px;
+            line-height: 35px;
+        }
+
+        .xingming {
+            font-weight: bold;
+        }
+
+        .coner {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .none {
+            display: none;
+        }
+
+        .con div {
+            border: 5px solid #ccc;
+        }
+
+        .col {
+            background: black;
+            color: white;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- //person -->
+    <div id="box">
+        <div class="top"><input type="text" id="ipt">
+            <span class="all">全部</span>
+            <span class="boys">男生</span>
+            <span class="girls">女生</span>
+
+        </div>
+        <div class="con">
+
+        </div>
+
+    </div>
+    <script src="./js/idnex.js"></script>
+
+
+</body>
+
+</html>

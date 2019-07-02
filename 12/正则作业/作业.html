@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>正则验证作业 </title>
+    <style>
+        .check input {
+            width: 260px;
+            vertical-align: middle;
+        }
+
+        .check label {
+            display: inline-block;
+            width: 70px;
+            text-align: right;
+        }
+
+        .check section {
+            padding: 10px 0;
+        }
+
+        .check span {
+            display: inline-block;
+            vertical-align: middle;
+            width: 100px;
+            height: 26px;
+            background: #eee;
+        }
+
+        .yes {
+            color: green;
+        }
+
+        .no {
+            color: Red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="check">
+        <section><label for="">用户名：</label><input type="text" placeholder="邮箱或手机号" class="user"><span></span></section>
+        <section><label for="">密码：</label><input type="password" class="pwd"
+                placeholder="字母开头，后跟任意字符，共6-8位"><span></span></section>
+        <div><button id="subMit">提交</button></div>
+    </div>
+    <script>
+        /*作业要求：
+         * 当用户名或密码框失去焦点时分别进行验证，验证规则按输入框的占位符要求来
+         * 当点击提交按钮时对用户名和密码同时验证
+         * 验证通过在对应的span标签中显示"ok"并添加yes样式,没通过显示"error"并添加no样式
+         */
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+
+        // {
+        //     title: "星期天下午来班级学习",
+        //         count: 43
+        // }
+        // console.log(dataStr)
+        // var arrData = dataStr.split("&")
+
+        // // console.log(arrData)
+        // var obj = {}
+        // arrData.forEach(function (item) {
+        //     var arr = item.split("=")
+        //     // 地址栏转码  decodeURI(转码字符串)
+        //     obj[arr[0]] = decodeURI(arr[1])
+        // })
+
+        // console.log(obj)
+
+
+        // title = 星期天下午来班级学习 & count=43 & qwe=564
+        // 正则表达式转化=》
+        // 第一步 替换 &  =>  " , "
+        // title = 星期天下午来班级学习 " , "count=43 " , "qwe=564
+        // 第二部 替换 =  =>  " : "
+        // title " : " 星期天下午来班级学习 " , "count" : "43 " , "qwe=564
+        // 两端加上大括号
+        // { " title " : " 星期天下午来班级学习 " , "count" : "43 " , "qwe=564  "}
+        // var dataStr = location.search.slice(1)
+        // var a = '{"' + dataStr.replace(/&/g, '","').replace(/=/g, '":"') + '"}'
+        // console.log(JSON.parse(a))
+
+        function getUrlParams() {
+            return JSON.parse('{"' + location.search.slice(1).replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+        }
+
+        // var obj = getUrlParams()
+        // console.log(obj)
+
+
+        // {
+        //     title: "星期天下午来班级学习",
+        //         count: 43
+        // }
+        // 是将字符串对象数据转化为对象
+        // JSON.parse()
+
+        var obj = JSON.parse('{"name": "123" , "title":"123"}')
+        
+        console.log(obj)
+    </script>
+</body>
+
+</html>

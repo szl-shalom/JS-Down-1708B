@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 安全模式类
+        // 忘记使用new关键字
+        var obj = function (name, age, id) {
+            if (!(this instanceof obj)) {
+                return new obj(name, age, id)
+            }
+            this.name = name
+            this.age = age
+            this.id = id
+        }
+
+        console.log(new obj("张三", 24, 520))
+        console.log(obj("李四", 26, 521))
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		#box {
+			width: 500px;
+			height: auto;
+			border: 1px solid #ccc;
+		}
+
+		p {
+			width: 500px;
+			height: 30px;
+			background: #ccc;
+			border-radius: 30px;
+		}
+
+		span {
+			display: inline-block;
+			height: 30px;
+			border-radius: 30px;
+		}
+
+		div>div {
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="box">
+		<div>
+			<p>
+				<span>123</span>
+			</p>
+		</div>
+	</div>
+	<script>
+		function random(n, m) {
+			return Math.floor(Math.random() * (m - n + 1) + n)
+		}
+
+		function getColor() {
+			var s = "#"
+			for (var i = 0; i < 6; i++) {
+				s += random(0, 15).toString(16)
+			}
+			return s
+		}
+
+
+		// console.log(getColor())
+		var html = ""
+		for (var i = 0; i < 6; i++) {
+			html += `<div>
+						<p>
+							<span style="background:${getColor()};width:${random(0, 100)}%">123</span>
+						</p>
+					</div>`
+		}
+		console.log(html)
+
+		var box = document.querySelector("#box")
+		box.innerHTML = html
+
+
+
+
+	</script>
+</body>
+
+</html>

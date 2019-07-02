@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <select name="" id="first">
+        <option value="请选择"></option>
+    </select>
+    <select name="" id="second"></select>
+    <div name="" id="third"></div>
+
+
+    <div class="box">
+
+
+    </div>
+    <script src="./data.js"></script>
+    <script>
+        var first = document.querySelector("#first")
+        var second = document.querySelector("#second")
+        var third = document.querySelector("#third")
+        var box = document.querySelector(".box")
+
+        function render(el, arr) {
+            el.innerHTML = `<option value="请选择">请选择</option>`
+            el.innerHTML += arr.map(function (item) {
+                return `<option value="${item.title}">${item.title}</option>`
+            }).join()
+        }
+
+
+        function addEvent() {
+            var firstIndex
+            first.onchange = function () {
+                third.innerHTML = `<option value="请选择">请选择</option>`
+                firstIndex = this.selectedIndex - 1
+                render(second, data[firstIndex].children)
+            }
+
+            second.onchange = function () {
+                var index = this.selectedIndex - 1
+                third.innerHTML = [...data[firstIndex].children[index].children].map(function (item) {
+                    return `<span>${item.title}</span>`
+                }).join("")
+            }
+
+            third.onclick = function (e) {
+                var tar = e.target;
+                if (tar.nodeName === "SPAN") {
+                    var span = tar.cloneNode(true)
+                    console.log(first.value)
+                    span.innerHTML = `${first.value}>${second.value}>${span.innerHTML}<button>X</button>`
+                    box.appendChild(span)
+                }
+            }
+
+            box.onclick = function (e) {
+                var tar = e.target;
+                if (tar.nodeName === "BUTTON") {
+                    tar.parentNode.parentNode.remove(tar.parentNode)
+                }
+
+            }
+        }
+        render(first, data)
+        addEvent()
+    </script>
+
+</body>
+
+</html>

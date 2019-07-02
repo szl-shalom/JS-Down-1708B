@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 组合继承  就是想类式继承和构造函数继承的有点组合起来
+
+        // 父类
+        function SuperClass(name) {
+            console.log(1)
+            this.name = name
+             this.book = [1, 2, 3, 4]
+        }
+        // 父类原型
+        SuperClass.prototype.getName = function () {
+            return this.name
+        }
+        // 子类
+        function SubClass(name, id) {
+            // 构造函数继承
+            SuperClass.call(this, name)
+            this.id = id;
+        }
+        // 子类原型  类式继承
+        SubClass.prototype = new SuperClass()
+        SubClass.prototype.getID = function () {
+            return this.id
+        }
+        // 问题一  父类构造函数被执行了两次
+        var a = new SubClass("史志龙1", 1)
+        a.__proto__.book.push(5)
+        var b = new SubClass("史志龙1", 2)
+        console.log(a)
+        console.log(b)
+
+    </script>
+</body>
+
+</html>

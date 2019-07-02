@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>1
+        <div>2
+            <div>3</div>
+        </div>
+    </div>
+
+    <script>
+        var node = cloneNode(document.body, [])
+        console.log(node)
+        function cloneNode(node, arr) {
+            if (node.children.length) {
+                [...node.children].forEach(function (item) {
+                    arr.push(item)
+                    cloneNode(item, arr)
+                })
+            } else {
+                return arr
+            }
+            return arr
+        }
+    </script>
+</body>
+
+</html>

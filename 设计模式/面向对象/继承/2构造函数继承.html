@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 构造函数继承
+
+
+        //父类
+        function SuperClass(id) {
+            this.book = [1, 2, 3]
+            this.id = id
+        }
+        // 父类的原型
+        SuperClass.prototype.getID = function () {
+            return this.id
+        }
+        // 子类
+        function SubClass(id) {
+            // 构造函数继承
+            SuperClass.call(this, id)
+        }
+
+        var a = new SubClass(1)
+        var b = new SubClass(2)
+        a.book.push(4)
+        console.log(a)
+        console.log(b)
+        //  问题一 由于子类的继承没有继承父类的prototype  如果子类想要继承就必须放到构造函数当中去，这样就违背了代码复用的原则
+
+
+    </script>
+</body>
+
+</html>

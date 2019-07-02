@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            background: red;
+        }
+
+        #div1 {
+            left: 0;
+            top: 0;
+        }
+
+        #div2 {
+            left: 50%;
+            top: 50%;
+            /* transform: translate(-50%, -50%) */
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="div1"></div>
+    <div id="div2"></div>
+
+    <script>
+        var div1 = document.querySelector("#div1"),
+            div2 = document.querySelector("#div2");
+        // 获取div2 的位置信息
+        var a = div2.offsetLeft,
+            b = div2.offsetTop,
+            c = div2.offsetWidth + a,
+            d = div2.offsetHeight + b;
+
+        div1.onmousedown = function (e) {
+            var x = e.offsetX,
+                y = e.offsetY;
+            document.onmousemove = function (e) {
+                var yy = e.clientY,
+                    xx = e.clientX,
+                    top = yy - y,
+                    left = xx - x;
+                div1.style.left = left + "px"
+                div1.style.top = top + "px"
+
+                var aa = div1.offsetLeft + div1.offsetWidth > a,
+                    bb = div1.offsetTop + div1.offsetHeight > b,
+                    cc = div1.offsetLeft > c,
+                    dd = div1.offsetTop > d;
+                // console.log(aa, bb, cc, dd)
+                if (aa && bb && cc && dd) {
+                    console.log("撞了")
+                }
+            }
+        }
+
+        div1.onmouseup = function () {
+            document.onmousemove = null
+        }
+
+
+        // var div1 = document.querySelector("#div1"),
+        //     div2 = document.querySelector("#div2"),
+        //     a = div2.offsetLeft,
+        //     b = div2.offsetTop,
+        //     c = a + div2.offsetWidth,
+        //     d = b + div2.offsetHeight;
+
+
+        // div1.onmousedown = function (e) {
+        //     e = e || window.event
+        //     var x = e.offsetX,
+        //         y = e.offsetY;
+        //     document.onmousemove = function (e) {
+        //         var xx = e.pageX,
+        //             yy = e.pageY,
+        //             left = xx - x,
+        //             top = yy - y;
+        //         div1.style.left = left + "px"
+        //         div1.style.top = top + "px"
+
+
+
+        //         var aa = div1.offsetLeft + div1.offsetWidth > a
+        //         var bb = div1.offsetTop + div1.offsetHeight > b
+        //         var cc = div1.offsetLeft > c
+        //         var dd = div1.offsetTop > d
+
+        //         if (aa !== cc && bb !== dd) {
+        //             console.log("撞了")
+        //         }
+
+
+        //         // if (aa && bb && cc && dd) {
+        //         //     console.log(1)
+        //         // }
+        //     }
+        // }
+        // div1.onmouseup = function () {
+        //     document.onmousemove = null
+        // }
+
+
+
+    </script>
+</body>
+
+</html>

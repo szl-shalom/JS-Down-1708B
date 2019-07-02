@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            position: absolute;
+            left: 50%;
+            margin-left: -250px;
+        }
+
+        p {
+            display: inline-block;
+            margin-left: 200px;
+        }
+
+        span {
+            margin-left: 10px;
+        }
+
+        .bx {
+            width: 500px;
+            height: 300x;
+            background: #fff;
+            display: none;
+            position: absolute;
+            left: 50%;
+            margin-left: -250px;
+            z-index: 999999;
+            border: 1px solid #000;
+        }
+
+        .bx.active {
+            display: block
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <button class="btn">新增</button>
+        <p>搜索<input type="text" placeholder="请输入关键字" class="search"></p>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>firstname</th>
+                <th>lastname</th>
+                <th>username</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>saf</td>
+                    <td>vg</td>
+                    <td>df</td>
+                    <td>
+                        <b class="write">编辑</b><span class="delate">删除</span></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>saf</td>
+                    <td>vg</td>
+                    <td>df</td>
+                    <td>
+                        <b class="write">编辑</b><span class="delate">删除</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="bx">
+        <p>First Name</p>
+        <input type="text" class="in1">
+        <p>Last Name</p>
+        <input type="text" class="in2">
+        <p>User Name</p>
+        <input type="text" class="in3">
+        <button class="btn1">确定</button>
+    </div>
+    <script src="data.js"></script>
+    <script src="index.js"></script>
+
+    <script>
+        new ToDoList({
+            data: data,
+            box: '.box'
+        })
+    </script>
+</body>
+
+</html>

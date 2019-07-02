@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 100%;
+            height: 100px;
+            background: gray;
+            margin-top: 200px;
+            position: relative;
+        }
+
+        #car {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            /* left: 0; */
+            top: 20px;
+        }
+
+        #ren {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            right: 0;
+        }
+
+        #car img,
+        #ren img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <video src=""></video>
+    <div id="box">
+        <div id="car"><img src="img/car.jpg" alt=""></div>
+        <div id="ren"><img src="img/2011.gif" alt=""></div>
+    </div>
+
+
+    <script>
+        // 元素尺寸
+        // 元素.offsetWidth  获取元素的宽度
+        // 元素.offsetHeight 获取元素的高度
+        // 元素位置
+        // 元素.offsetLeft  获取元素到body的左边距
+        // 元素.offsetTop  获取元素到body的上边距
+        var car = document.querySelector("#car"),
+            ren = document.querySelector("#ren");
+
+
+        // document.onkeydown = function (e) {
+        //     if (e.keyCode === 37) {
+        //         var left = ren.offsetLeft
+        //         ren.style.left = left - 10 + "px"
+        //     }
+
+        //     // if (e.keyCode === 39) {
+        //     //     var left = ren.offsetLeft
+        //     //     ren.style.left = left - 10 + "px"
+        //     // }
+        //     if (ren.offsetLeft < car.offsetLeft + car.offsetWidth) {
+        //         // alert("赔钱！！！")
+        //         // document.onkeydown = null
+        //     }
+        // }
+
+
+    </script>
+</body>
+
+</html>

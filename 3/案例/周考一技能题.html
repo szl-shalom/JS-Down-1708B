@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			list-style:none;
+		}
+		
+		ul{
+			height:50px;
+		}
+
+		ul li{
+			width:100px;
+			height:40px;
+			float:left;
+			padding:0 5px;
+			line-height:50px;
+			text-align:center;
+			border-bottom:1px solid #ccc;
+		}
+
+		#bottom{
+			clear:both;
+		}
+
+		ul li span{
+			padding: 0 5px;
+			text-align:center;
+		}
+
+		button{
+			display:inline-block;
+			width:200px;
+			height:45px;
+			color:white;
+			background:green;
+		}
+		
+		button.col{
+			background:#ccc;
+			color:black;
+		}
+
+		ul li.bor{
+			border:1px solid #ccc;
+			border-bottom:none;
+		}
+
+		ul li span:hover{
+			background:orange;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+
+		<ul class="ul">
+			<li class='bor'>网络设置<span>X</span></li>
+			<li>用户管理<span>X</span></li>
+			<li>权限分配<span>X</span></li>
+			<li>商品管理<span>X</span></li>
+			<li>订单管理<span>X</span></li>
+		</ul>
+
+		<div id="class">
+	     	<p id="content">内容1</p>
+	     	<button id="add">新增选项</button>
+	     	<button id="remove">删除:商品管理</button>
+	     	<button>切换到:用户管理</button>
+		</div>
+	</div>
+
+	<script> 	
+		var ul = document.querySelector('.ul'),
+			add = document.querySelector('#add'),
+			content = document.querySelector('#content');
+
+		//给ul绑定事件(事件委托)
+		ul.onclick = function(event){
+			var e = event || window.event, //事件对象兼容
+				tar = e.target || e.srcElement; //事件源兼容
+			if(tar.nodeName === 'LI'){ //判断点击的内容是否是li
+				tab(tar);
+			}
+			if(tar.nodeName === 'SPAN'){ //判断点击的内容是否是span(删除)
+				remove(tar);
+			}
+		}
+
+		add.onclick = function(){
+			addEle();
+		}
+		//封装切换方法
+		function tab(node){ 
+			[...ul.children].forEach(function(item){ //先将所有元素上的类删除
+				item.classList.remove('bor');
+			})
+			node.classList.add('bor');
+			content.innerHTML = node.firstChild.nodeValue;
+		}
+
+		//封装删除方法
+		function remove(node){
+			ul.removeChild(node.parentNode);
+		}
+
+		//封装添加元素的方法
+		function addEle(){
+			var li = document.createElement('li');
+			li.innerHTML = `新内容${randomNum()}<span>X</span>`;
+			ul.appendChild(li);
+		}
+
+		//封装获取随机数的方法
+		function randomNum(){
+			return Math.random().toString().substr(2,3);
+		}
+
+
+	/*function $(id){
+		return document.querySelector(id);
+	}
+	var ul = $('ul'),
+	    content = $('#content'),
+	    add = $('#add'),
+	    remove = $('#remove'),
+	    currentIndex = 0;
+
+
+	 	//给ul下默认的li绑定事件
+	 	[...ul.children].forEach(function(item,index){
+	 		item.setAttribute('val',index + 1); //给每个默认的li挂载属性
+	 		item.onclick = function(){
+	 			clear();
+	 			this.classList.add('bor'); //点击谁给谁添加类
+	 			content.innerHTML = '内容' + this.getAttribute('val');
+	 		}
+
+	 		item.lastElementChild.onclick = function(event){//给每个X号绑定事件
+	 			event.stopPropagation();
+	 			removeEle(this);
+	 		}
+	 	})
+
+	 	//给新增按钮绑定事件
+	 	add.onclick = a;
+
+	 	function a(){
+	 		var li = document.createElement('li');
+	 		li.innerHTML = `新项目${randomNum(100,999)}<span>X</span>`;
+	 		li.onclick = function(){  
+	 			clear();   //清空所有元素上的类
+	 			this.classList.add('bor'); // 点击谁给谁添加类
+	 			content.innerHTML = '内容' + randomNum(10,999); 
+	 		}
+
+	 		li.lastElementChild.onclick = function(event){ //给X绑定事件
+	 			event.stopPropagation();  //阻止冒泡
+	 			removeEle(this); //删除相应父元素
+	 		}
+	 		ul.appendChild(li);
+	 	}
+
+
+
+
+	 	//给删除按钮绑定事件
+	 	remove.onclick = function(){
+	 		remove.disabled = true; 
+	 		remove.className = 'col';
+	 		[...ul.children].forEach(function(item){
+	 			if(item.firstChild.nodeValue == '商品管理'){
+	 				ul.removeChild(item);
+	 			}
+	 		})
+	 	}
+
+	 	//封装排他函数
+	 	function clear(){
+	 		[...ul.children].forEach(function(it){ //先将所有的元素上的bor删除
+	 				it.classList.remove('bor');
+	 			})
+	 	}
+
+	 	//封装获取随机数的函数
+	 	function randomNum(n,m){
+	 		return Math.floor(Math.random() * (m - n + 1) + n);
+	 	}
+
+	 	///封装删除事件
+	 	function removeEle(node){
+	 		ul.removeChild(node.parentNode);
+	 	}
+*/
+
+
+
+
+
+
+	
+		 
+	</script>
+</body>
+</html>

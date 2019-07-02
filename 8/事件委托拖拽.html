@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            background: red;
+        }
+
+        .active {
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <img src="./8800276_184927469000_2.png" alt="">
+</body>
+<script>
+    // 事件源
+    var el, pos, flag = false
+    document.onmousedown = function (e) {
+        flag = true
+        // 获取事件源
+        el = e.target
+        // 给事件源加定位
+        el.style.position = "absolute"
+        // 获取鼠标对于元素的位置
+
+        el.classList.add("active")
+        pos = {
+            x: e.offsetX,
+            y: e.offsetY
+        }
+        // 去除默认行为
+        e.preventDefault()
+        console.log(pos)
+    }
+
+    document.onmousemove = function (e) {
+        if (flag) {
+            var left = e.pageX - pos.x,
+                top = e.pageY - pos.y;
+            // 控制区域
+
+            if (left < 0) left = 0
+            if (top < 0) top = 0
+
+
+            if (left > document.documentElement.clientWidth - el.offsetWidth) {
+                left = document.documentElement.clientWidth - el.offsetWidth
+            }
+
+            if (top > document.documentElement.clientHeight - el.offsetHeight) {
+                top = document.documentElement.clientHeight - el.offsetHeight
+            }
+
+
+
+            el.style.left = left + "px"
+            el.style.top = top + "px"
+        }
+    }
+
+    document.onmouseup = function () {
+        flag = false
+        el.classList.remove("active")
+    }
+
+</script>
+
+</html>

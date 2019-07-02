@@ -1,0 +1,58 @@
+/*
+*   定时显示和隐藏活动入口
+*/ 
+define(function (require, exports, module) { 
+
+    var actDom = $(".js-activity")
+    var hideDom = $(".js-hide-in-act")
+    var startDate = 10;
+    var startHours = 0;
+
+    var endDate = 21;
+    var endHours = 0;
+    /**
+     * 手动创建广告位方法，调用入口函数
+     * @param {dom选择器名称} rootElementSelector
+     * @param {广告图相关属性配置} option
+     */
+    initActivity = function () {
+        
+        // 缺少链接、图片、id时向控制台抛出警告
+        if (!actDom.size()) {
+            console.info('this page has no activity door dom node');
+            return false;
+        }
+        if (!exports.checkTime()) {
+            console.info('time still not enough');
+            hideDom.css("display","block")
+            return false;
+        }
+        
+        actDom.css("display","block")
+        
+        
+    }
+
+
+    /**
+     * 检测是否在活动时间
+     * 不在则返回false
+     */
+    exports.checkTime = function () {
+        var start = new Date();
+        var end = new Date();
+        var now = new Date().getTime()
+        start.setDate(startDate)
+        start.setHours(startHours,0,0,0)
+        
+        end.setDate(endDate)
+        end.setHours(endHours,0,0,0)
+
+        if(start.getTime() < now && now < end.getTime()){
+            return true;
+        }
+        return false;
+    }
+    initActivity()
+
+})

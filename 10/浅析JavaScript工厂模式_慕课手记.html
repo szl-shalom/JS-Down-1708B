@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)https://www.imooc.com/article/35100 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>
+浅析JavaScript工厂模式_慕课手记
+</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="mobile-agent" content="format=wml" ;="" url="https://m.imooc.com/article/35100">
+<link rel="alternate" media="only screen and (max-width: 640px)" href="https://m.imooc.com/article/35100">
+<meta name="mobile-agent" content="format=xhtml" ;="" url="https://m.imooc.com/article/35100">
+<meta name="mobile-agent" content="format=html5" ;="" url="https://m.imooc.com/article/35100">
+<meta property="qc:admins" content="77103107776157736375">
+<meta property="wb:webmaster" content="c4f857219bfae3cb">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<meta http-equiv="Cache-Control" content="no-transform ">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<link rel="dns-prefetch" href="https://www.imooc.com/">
+<link rel="dns-prefetch" href="https://img.imooc.com/">
+<link rel="dns-prefetch" href="https://img.mukewang.com/">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.imooc.com/static/img/common/touch-icon-ipad.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.imooc.com/static/img/common/touch-icon-iphone-retina.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.imooc.com/static/img/common/touch-icon-ipad-retina.png">
+
+
+
+<meta name="Description" content="这里主要介绍两种工厂模式，第一种“简单工厂模式”，第二种“工厂方法模式”简单工厂模式1.定义由一个工厂对象决定对象创建某一种产品对象的的实例。主要用来创建同一类对象。2.具体需求现">
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="./浅析JavaScript工厂模式_慕课手记_files/moco.min.css" type="text/css">
+    <link rel="stylesheet" href="./浅析JavaScript工厂模式_慕课手记_files/swiper-3.4.2.min.css">
+
+
+
+
+<script src="./浅析JavaScript工厂模式_慕课手记_files/push.js.下载"></script><script type="text/javascript" async="" src="./浅析JavaScript工厂模式_慕课手记_files/rt.js.下载"></script><script src="./浅析JavaScript工厂模式_慕课手记_files/hm.js.下载"></script><script type="text/javascript" id="zhuge-js" async="" src="./浅析JavaScript工厂模式_慕课手记_files/zhuge.min.js.下载"></script><script type="text/javascript">
+
+var OP_CONFIG={"module":"article","page":"details"};
+var isLogin = 0;
+var is_choice = "";
+var seajsTimestamp="v=201906171906";
+var _msg_unread = 0; 
+var _not_unread = 0; 
+var _cart_num = 0;
+</script>
+
+
+
+
+
+
+<link href="./浅析JavaScript工厂模式_慕课手记_files/captcha.min.css" rel="stylesheet">
+<script>
+var isLogin=0
+var _hmt = _hmt || [];
+var pageInfo = {
+	canForward:"1",
+    id: "35100",
+    praiseNum:"0"
+}
+var dtid = "30880";
+var marking = "fe";
+var user = {
+    uid : ""
+}
+var authorUid = {
+    uid : '6457971'
+}
+var curPage = 'details'
+
+var a_id = 35100
+
+// 为html转码，article_content 为新markdown编辑器接收的初始化内容
+var article_content = "&lt;p&gt;这里主要介绍两种工厂模式，第一种“简单工厂模式”，第二种“工厂方法模式”&lt;/p&gt;&lt;h1&gt;简单工厂模式&lt;/h1&gt;&lt;h2&gt;1.定义&lt;/h2&gt;&lt;p&gt;由一个工厂对象决定对象创建某一种产品对象的的实例。主要用来创建同一类对象。&lt;/p&gt;&lt;h2&gt;2.具体需求&lt;/h2&gt;&lt;p&gt;现在有一个登录模块，当用户的输入的用户名多于16个时，给一个警示弹窗&lt;/p&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;pre&gt;var&amp;nbsp;LoginAlert&amp;nbsp;=&amp;nbsp;function(text)&amp;nbsp;{&amp;nbsp;&amp;nbsp;this.content&amp;nbsp;=&amp;nbsp;text&amp;nbsp;&amp;nbsp;\n}\n\nLoginAlert.prototype.show&amp;nbsp;=&amp;nbsp;function()&amp;nbsp;{&amp;nbsp;&amp;nbsp;//显示警示框&amp;nbsp;&amp;nbsp;}var&amp;nbsp;userNameAlert&amp;nbsp;=&amp;nbsp;new&amp;nbsp;LoginAlert(&amp;#39;用户名不能多于16个字母或数字&amp;#39;)\nuserNameAlert.show()&lt;/pre&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;当用户输入的密码不正确时，给一个密码不正确的弹窗，心中暗喜，面对对象编程真好用，刚刚学完的类就能派上用场&lt;/p&gt;&lt;pre&gt;var&amp;nbsp;passwordAlert&amp;nbsp;=&amp;nbsp;new&amp;nbsp;LoginAlert(&amp;#39;输入的密码啊不正确&amp;#39;)\npasswordAlert.show();&lt;/pre&gt;&lt;p&gt;新需求：当用户登录时用户名不存在的时候弹窗提示“您的用户名不存在，请重新输入”，并在警示框上加一个注册按钮，完了，之前的累无法复用，又得创建一个类&lt;/p&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;pre&gt;var&amp;nbsp;LoginConfirm&amp;nbsp;=&amp;nbsp;function(text)&amp;nbsp;{&amp;nbsp;&amp;nbsp;this.content&amp;nbsp;=&amp;nbsp;text&amp;nbsp;&amp;nbsp;\n}\n\nLoginConfirm.prototype.show&amp;nbsp;=&amp;nbsp;function()&amp;nbsp;{&amp;nbsp;&amp;nbsp;//显示确认框&amp;nbsp;&amp;nbsp;}var&amp;nbsp;loginFailConfrim&amp;nbsp;=&amp;nbsp;new&amp;nbsp;LoginConfirm(&amp;#39;您的用户名不存在，请重新输入&amp;#39;)\nloginFailConfrim.show()&lt;/pre&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;新需求：当用户登录成功的时候给一个弹窗，除了有确认按钮和取消按钮，也提示一句‘欢迎回来，请输入您的心情’，这又得写一个新类&lt;/p&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;pre&gt;var&amp;nbsp;LoginPrompt&amp;nbsp;=&amp;nbsp;function(text)&amp;nbsp;{&amp;nbsp;&amp;nbsp;this.content&amp;nbsp;=&amp;nbsp;text&amp;nbsp;&amp;nbsp;\n}\n\nLoginPrompt.prototype.show&amp;nbsp;=&amp;nbsp;function()&amp;nbsp;{&amp;nbsp;&amp;nbsp;//显示确认框&amp;nbsp;&amp;nbsp;}&lt;/pre&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;新需求：现在有注册模块也要做，也有这些需求，这时候我们应该怎么办呢？&lt;/p&gt;&lt;p&gt;我们这个把这三个类封装在一个函数里，这时候我们只需要记住这个函数，然后通过这个函数就可以创建我们需要的对象，这样所有使用的人都不在关注这些对象到底依赖于哪些基类，我们知道这个函数就可以。这个函数我们通常也称为工厂函数，这种模式叫简单工厂模式，是工厂模式中最简单的一种形式&lt;/p&gt;&lt;p&gt;如何改造：&lt;/p&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;pre&gt;var&amp;nbsp;PopFactory&amp;nbsp;=&amp;nbsp;function(name)&amp;nbsp;{&amp;nbsp;&amp;nbsp;switch(name)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;case&amp;nbsp;&amp;#39;alert&amp;#39;:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return&amp;nbsp;new&amp;nbsp;LoginAlert();&amp;nbsp;&amp;nbsp;\n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;case&amp;nbsp;&amp;#39;confirm&amp;#39;:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return&amp;nbsp;new&amp;nbsp;LoginConfirm();&amp;nbsp;\n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;case&amp;nbsp;&amp;#39;prompt&amp;#39;:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return&amp;nbsp;new&amp;nbsp;LoginPrompt();&amp;nbsp;\n&amp;nbsp;&amp;nbsp;}&amp;nbsp;&amp;nbsp;\n}&lt;/pre&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;这样我们就实现了一个简单的工厂，使用者只要知道这个工厂和参数就行，但是这3个类用很多公有的方法，能不能提取出来？&lt;/p&gt;&lt;p&gt;现在我们把这三个类改成一个工厂模式，首先抽象他们的相同点，不如共有属性this.content,原型共有方法show，当然也有不同点，比如确认框和提示框的确定按钮，提示框的用户输入等等&lt;/p&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;pre&gt;function&amp;nbsp;createPop(type,&amp;nbsp;text)&amp;nbsp;{&amp;nbsp;&amp;nbsp;var&amp;nbsp;o&amp;nbsp;=&amp;nbsp;new&amp;nbsp;Object();\n&amp;nbsp;&amp;nbsp;o.content&amp;nbsp;=&amp;nbsp;text;\n&amp;nbsp;&amp;nbsp;o.show&amp;nbsp;=&amp;nbsp;function()&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;//显示方法&amp;nbsp;&amp;nbsp;&amp;nbsp;}&amp;nbsp;if&amp;nbsp;(type&amp;nbsp;==&amp;nbsp;&amp;#39;alert&amp;#39;)&amp;nbsp;{\n\n&amp;nbsp;}&amp;nbsp;if&amp;nbsp;(type&amp;nbsp;==&amp;nbsp;&amp;#39;prompt&amp;#39;)&amp;nbsp;{\n\n&amp;nbsp;}&amp;nbsp;if&amp;nbsp;(type&amp;nbsp;==&amp;nbsp;&amp;#39;confirm&amp;#39;)&amp;nbsp;{\n\n&amp;nbsp;}&amp;nbsp;&amp;nbsp;\n}\n//创建警示框\nvar&amp;nbsp;userNameAlert&amp;nbsp;=&amp;nbsp;createPop(&amp;#39;alert&amp;#39;,&amp;nbsp;&amp;#39;用户名只能是26个字母和数字&amp;#39;)&lt;/pre&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;总结：团队开发不同于个人开发，其对全局变量限制很大，所以我们要尽量少的创建全局变量。对于同一类对象在不同需求中的重复性使用，很多时候不需要重复创建，代码复用是面向对象的一条准则&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;h1&gt;2.工厂方法模式&lt;/h1&gt;&lt;h2&gt;定义&lt;/h2&gt;&lt;p&gt;通过对产品类的抽象使其创造业务只要负责用户创建多类产品的实例&lt;/p&gt;&lt;h2&gt;具体需求&lt;/h2&gt;&lt;p&gt;网站首页要展示一个大批学科，字体和颜色不一&lt;/p&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;pre&gt;var&amp;nbsp;Java&amp;nbsp;=&amp;nbsp;function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;this.content&amp;nbsp;=&amp;nbsp;content\n&amp;nbsp;&amp;nbsp;(function()&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;var&amp;nbsp;div&amp;nbsp;=&amp;nbsp;document.createElement(&amp;#39;div&amp;#39;)\n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;div.innerHtml&amp;nbsp;=&amp;nbsp;content;\n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;div.style.color&amp;nbsp;=&amp;nbsp;&amp;#39;green&amp;#39;;\n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;dicument.getElementById(&amp;#39;container&amp;#39;).appendChild(&amp;#39;div&amp;#39;)&amp;nbsp;&amp;nbsp;\n&amp;nbsp;&amp;nbsp;})(content)&amp;nbsp;&amp;nbsp;\n}var&amp;nbsp;Php&amp;nbsp;=&amp;nbsp;function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;//....}&lt;/pre&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;上节课学过的简单工厂模式派上了用场，赶紧去用简单的工厂模式去实现一下，这样以后再创建对象直接找工厂就行&lt;/p&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;pre&gt;var&amp;nbsp;Java&amp;nbsp;=&amp;nbsp;function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;this.content&amp;nbsp;=&amp;nbsp;content\n&amp;nbsp;&amp;nbsp;(function()&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;var&amp;nbsp;div&amp;nbsp;=&amp;nbsp;document.createElement(&amp;#39;div&amp;#39;)\n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;div.innerHtml&amp;nbsp;=&amp;nbsp;content;\n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;div.style.color&amp;nbsp;=&amp;nbsp;&amp;#39;green&amp;#39;;\n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;dicument.getElementById(&amp;#39;container&amp;#39;).appendChild(&amp;#39;div&amp;#39;)&amp;nbsp;&amp;nbsp;\n&amp;nbsp;&amp;nbsp;})(content)&amp;nbsp;&amp;nbsp;\n}var&amp;nbsp;Php&amp;nbsp;=&amp;nbsp;function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;//....}var&amp;nbsp;JavaScript&amp;nbsp;=&amp;nbsp;function(content)&amp;nbsp;{&amp;nbsp;//...}function&amp;nbsp;JobFactory(type,&amp;nbsp;content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;switch(type)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;case:&amp;nbsp;&amp;#39;java&amp;#39;:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return&amp;nbsp;new&amp;nbsp;Java(content)&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;case:&amp;nbsp;&amp;#39;php&amp;#39;:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return&amp;nbsp;new&amp;nbsp;Php(content)&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;case:&amp;nbsp;&amp;#39;javascript&amp;#39;:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return&amp;nbsp;new&amp;nbsp;JavaScript(content)\n&amp;nbsp;&amp;nbsp;&amp;nbsp;}\n}&lt;/pre&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;新需求：现在又需要加一批UI学科，红色边框。&lt;/p&gt;&lt;p&gt;问题：需求一直在变，开始需求简单，直接创建对象，后来需求多了，用简单方法工厂方法重构，现在又变了，不仅仅要添加类，还要修改工厂函数，很麻烦，现在引入我们的工厂方法来解决这个问题&lt;/p&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;pre&gt;Factory.prototype&amp;nbsp;=&amp;nbsp;{\n&amp;nbsp;&amp;nbsp;Java:function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;//...&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;},\n&amp;nbsp;&amp;nbsp;JavaSctipt:function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;//...&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;},\n&amp;nbsp;&amp;nbsp;Java:&amp;nbsp;function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;//...&amp;nbsp;&amp;nbsp;}\n}&lt;/pre&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;这样我们如果要添加其他的类，只需要写在Factory这个工程类里面就行了&lt;/p&gt;&lt;h2&gt;安全的工厂方法&lt;/h2&gt;&lt;p&gt;安全的工厂方法是可以屏蔽一些使用过程中造成的错误，我们知道类前面不要有new的关键字，不过如果其他人不知道这个对象是一个雷，忽略了new关键字直接执行，此时得不到我们预期的对象，解决办法如下&lt;/p&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;pre&gt;var&amp;nbsp;Factory&amp;nbsp;=&amp;nbsp;function(type,&amp;nbsp;content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;if&amp;nbsp;(this&amp;nbsp;instanceof&amp;nbsp;Factory)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;var&amp;nbsp;s&amp;nbsp;=&amp;nbsp;new&amp;nbsp;this[type](content)&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return&amp;nbsp;s\n&amp;nbsp;&amp;nbsp;&amp;nbsp;}&amp;nbsp;else&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return&amp;nbsp;new&amp;nbsp;Factory(type,&amp;nbsp;content)\n&amp;nbsp;&amp;nbsp;&amp;nbsp;}\n}\nFactory.prototype&amp;nbsp;=&amp;nbsp;{\n&amp;nbsp;&amp;nbsp;Java:function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;//...&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;},\n&amp;nbsp;&amp;nbsp;JavaSctipt:function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;//...&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;},\n&amp;nbsp;&amp;nbsp;Java:&amp;nbsp;function(content)&amp;nbsp;{&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;//...&amp;nbsp;&amp;nbsp;}\n}&lt;/pre&gt;&lt;p&gt;&lt;a&gt;&lt;img alt=&quot;复制代码&quot; src=&quot;https://img4.mukewang.com/5b1e6422000151e400200020.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Javascript工厂模式介绍到此结束，有不对的地方请及时指出&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/mianbaodaxia/p/9167677.html&quot;&gt;原文出处&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;";
+// 为html反转码
+article_content = article_content.replace(/\&lt\;/g, "<").replace(/\&gt\;/g, ">").replace(/\&amp\;/g, "&").replace(/\&quot\;/g, '"').replace(/\&apos\;/g, "'");
+// 递归遍历dom，处理图片懒加载
+function dfs(root) {
+	var nodes = Array.prototype.slice.call(root.children);
+	if (nodes.length) {
+		nodes.forEach(function (node) {
+			if(node.tagName == 'IMG') {
+				var src = node.src;
+				node.setAttribute('data-original', src);
+				node.setAttribute('class', 'lazyload');
+				node.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC';
+			}
+			dfs(node);
+		});
+	}
+}
+// 创建手记内容dom节点
+var articleEl = document.createElement("div");
+articleEl.innerHTML = article_content;
+// 遍历手记dom树
+dfs(articleEl);
+</script>
+
+<script type="text/javascript">
+
+eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('!4(){3 b={};3 d=0;3 5=[{c:\'//k.p.h/k/m/K/L.q\',6:0},{c:\'//m.p.h/I/J-O.q\',6:0}];3 u=4(){3 j,n=e P("(^| )"+"l=([^;]*)(;|$)");9(j=r.s.M(n)){o N(j[2])}D{o C}};3 A=4(t){3 B=u();3 8=e H();8.G(8.F()+E*v*v*10);r.s="l="+t+";13="+8.14()+";15=/;T=U.h";9(t&&t!=B){R.Y.Z()}};3 x=4(i){3 7=e X();7.V=4(){W(b[i]);b[i]=C;a(i,0)};7.Q=4(){a(i,1)};b[i]=S(4(){7.z="";a(i,1)},11);7.z=5[i].c+"?t="+12.16()};3 a=4(y,6){d++;5[y].6=6;9(d==5.f){3 g=0;w(3 i=0;i<5.f;i++){9(5[i].6==1){g=1}}A(g)}};w(3 i=0;i<5.f;i++){x(i)}}()',62,69,'|||var|function|urls|flag|imgobj|exp|if|callback|timer|url|count|new|length|error|com||arr|static|IMCDNS|img|reg|return|mukewang|png|document|cookie||getcookie|60|for|checkCdn|index|src|setcookie|_0|null|else|24|getTime|setTime|Date|images|unknow|common|logo|match|unescape|80|RegExp|onerror|window|setTimeout|domain|imooc|onload|clearTimeout|Image|location|reload|1000|3000|Math|expires|toGMTString|path|random'.split('|'),0,{}))
+
+</script>
+<script src="./浅析JavaScript工厂模式_慕课手记_files/init.js.下载"></script>
+<link rel="stylesheet" href="./浅析JavaScript工厂模式_慕课手记_files/saved_resource" type="text/css">
+<script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/seajs-text.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/common.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/jquery.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/string.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/userinfo.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/cart.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/showDoorForActivity.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/cookie.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/suggest.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/store.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/json.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/im.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/details.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/advertiseCheck.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/moco.min.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/socket.io.min.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/prettify.js.下载"></script><link charset="utf-8" rel="stylesheet" href="./浅析JavaScript工厂模式_慕课手记_files/prettify.css"><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/jquery.lazyload.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/ueditor.parse.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/layer.min.js.下载"></script><link charset="utf-8" rel="stylesheet" href="./浅析JavaScript工厂模式_慕课手记_files/layer.css"><link charset="utf-8" rel="stylesheet" href="./浅析JavaScript工厂模式_慕课手记_files/ueditor.css"><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/addCopy.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/course_tipoff.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/discoverycount.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/praise.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/common.js(1).下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/verify-code.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/mo.min.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/juicer.min.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/jquery.qrcode.min.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/limitinput.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/publish.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/detail.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/forward.js.下载"></script><script charset="utf-8" async="" src="./浅析JavaScript工厂模式_慕课手记_files/detail_forward.js.下载"></script><script src="./浅析JavaScript工厂模式_慕课手记_files/share.js.下载"></script><link rel="stylesheet" href="./浅析JavaScript工厂模式_慕课手记_files/share_style0_16.css"><link id="syntaxhighlighter_css" rel="stylesheet" type="text/css" href="./浅析JavaScript工厂模式_慕课手记_files/shCoreDefault.css"><script id="syntaxhighlighter_js" src="./浅析JavaScript工厂模式_慕课手记_files/shCore.js.下载" type="text/javascript" defer="defer"></script><style id="chartsContainerHeight">
+.edui-chart-container { height:500px}</style><style id="list">
+body ol,body ul{margin:0;padding:0;}body .list-paddingleft-1{padding-left:0}
+body .list-paddingleft-2{padding-left:20px}
+body .list-paddingleft-3{padding-left:40px}</style></head>
+
+<body>
+
+
+<div id="globalTopBanner" style="display: block;"><div><img src="./浅析JavaScript工厂模式_慕课手记_files/5d07b7c40915c1b025600048.jpg"></div></div>
+<div id="new_header" class="special-header">
+    <div class="page-container new-header clearfix" id="nav">
+        <ul class="nav-item">
+            <li><a href="https://www.imooc.com/" target="_self" class="imooc">慕课网首页</a></li>
+            <li><a href="https://www.imooc.com/course/list" target="_self">免费课程</a></li>
+            <li><a href="https://coding.imooc.com/" target="_self">实战课程</a></li>
+            <li><a href="https://class.imooc.com/" class="" target="_self">就业班</a></li>
+            <li><a href="https://www.imooc.com/read" target="_self">专栏<i class="icn-new"></i></a></li>
+            <li><a href="https://www.imooc.com/wenda" target="_self">猿问</a></li>
+            <li><a href="https://www.imooc.com/article" class="active" target="_self">手记</a></li>
+            <!-- <li><a href="//job.imooc.com" target="_self">猿聘<i class="icn-new"></i></a></li> -->
+            <li class="search" id="common-nav-search">
+                <a href="javascript:void(0);">
+                    <i class="imv2-search"></i>
+                </a>
+            </li>
+            <li class="input-search hide" id="common-input-search">
+                <div class="input-box">
+                    <input type="text" class="nav-search-input" autocomplete="off">
+                    <a href="javascript:void(0);" class="nav-searchBtn js-nav-searchBtn">
+                        <i class="imv2-search"></i>
+                    </a>
+                </div>
+                <div class="nav-search-box hide">
+                    <div class="hot">
+                        <h2>热搜</h2>
+                        <div class="hot-box"><a href="javascript:void(0)" class="hot-item js-history-search">毕设</a><a href="javascript:void(0)" class="hot-item js-history-search">React</a><a href="javascript:void(0)" class="hot-item js-history-search">面试</a><a href="javascript:void(0)" class="hot-item js-history-search">算法</a><a href="javascript:void(0)" class="hot-item js-history-search">Vue.js</a><a href="javascript:void(0)" class="hot-item js-history-search">Python</a><a href="javascript:void(0)" class="hot-item js-history-search">GO语言</a><a href="javascript:void(0)" class="hot-item js-history-search">小程序</a></div>
+                    </div>
+                    <div class="history hide">
+                        <h2>最近搜索<a href="javascript:void(0);" class="history-clear js-clear-history">清空</a></h2>
+                        <div class="history-box">
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-correlate-box hide">
+                    <div class="correlate">
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="header-right clearfix">
+            <div class="dist-money js-hide-in-act" style="display: none;">
+                <a href="https://order.imooc.com/pay/sharegoods" target="_blank"><div class="redPacket"></div>分销返利</a>
+            </div>
+            <div class="dist-money js-activity" style="display: block;">
+                <a href="https://www.imooc.com/act/invite" target="_blank"><div class="redPacket"></div>邀请有奖</a>
+            </div>
+            <div class="app-download" id="js-app-load">
+                <a href="https://www.imooc.com/mobile/app" target="_blank" style="width:60px;">下载APP</a>
+                <div class="app-load-box clearfix js-load-box">
+                    
+                    <div class="mobile-load-box">
+                        <h4>慕课网APP - 随时随地学编程</h4>
+                        <img src="./浅析JavaScript工厂模式_慕课手记_files/appload.png" class="l">
+                        <div class="r">
+                            <a class="app-load-btn" href="https://itunes.apple.com/cn/app/mu-ke-wang/id722179140?mt=8" target="_blank"><i class="icon-apple"></i>App Store下载</a>
+                            <a class="app-load-btn" href="https://www.imooc.com/mobile/appdown" target="_blank"><i class="icon-android"></i>Android下载</a>
+                            <p>扫描下载慕课网APP</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shop-cart" id="shop-cart">
+                <a href="https://order.imooc.com/pay/cart" class="shop-cart-icon" target="_blank">
+                    <span class="imv2-cart js-endcart"></span><span>购物车</span><span class="shopping_icon js-cart-num" data-ordernum="0" data-cartnum="0" style="display: none">0</span>
+                </a>
+                <div class="my-cart" id="js-my-cart"></div>
+            </div>
+                        <div id="login-area">
+                <ul class="header-unlogin clearfix">
+                    <li class="header-signin">
+                        <a href="https://www.imooc.com/user/newlogin" id="js-signin-btn">登录</a> / <a href="https://www.imooc.com/user/newsignup" id="js-signup-btn">注册</a>
+                    </li>
+                </ul>
+            </div>
+                    </div>
+    </div>
+</div>
+<div id="sub-header">
+            <div class="sub-container" id="sub-nav">
+            <a class="article-logo" href="https://www.imooc.com/article"><img src="./浅析JavaScript工厂模式_慕课手记_files/article-logo.png" alt=""></a>
+            <div class="operate-area clearfix">
+                <span>
+                    <a href="https://www.imooc.com/article/publish" target="_blank" class="btn btn-blue btn-article">写文章</a>
+                </span>
+                <span>
+                    <a href="https://www.imooc.com/discovery" target="_blank" class="btn btn-discovery">动态圈</a>
+                    <a class="count hide">0</a>
+                </span>
+            </div>
+            <div class="search-warp clearfix" style="min-width: 32px;">
+                
+
+                <div class="search-area" data-search="top-banner">
+                    <input class="search-input" data-suggest-trigger="suggest-trigger" placeholder="搜索感兴趣的知识和文章" type="text" autocomplete="off">
+                    <input type="hidden" class="btn_search" data-search-btn="search-btn">
+                    <ul class="search-area-result" data-suggest-result="suggest-result">
+                    </ul>
+                </div>
+                <div class="showhide-search" data-show="no"><i class="icon-search"></i></div>
+            </div>
+            
+        </div>
+    </div>
+<div class="bindHintBox js-bindHintBox hide">
+    <div class="pr">
+        为了账号安全，请及时绑定邮箱和手机<a href="https://www.imooc.com/user/setbindsns" class="ml20 color-red" target="_blank">立即绑定</a>
+        <button class="closeBindHint js-closeBindHint" type="button"></button>
+        <div class="arrow"> </div>
+    </div>
+</div>
+
+
+<div id="main">
+
+<div class="main_con clearfix">
+	<!-- 分享&收藏 -->
+	<div class="active-box js-active-fixed">
+		<div class="share-box">
+			<div class="small-share">
+				<ul class="share-wrap">
+					<li class="weichat-posi">
+						<!-- 推荐 --> 
+						<div class="praise-box">
+														<button id="js-praise-left"><span class="imv2-thumb_up"></span></button>
+																						<span class="praise-num">推荐</span>
+													</div>
+						<!-- 推荐end -->
+
+
+
+						<div class="icon-warp">
+						  <div class="follow-warp">
+							<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;pl&#39;])" data-track="pl-1-1" href="https://www.imooc.com/article/35100#comment" class="icon-nav imv2-chat_bubble" title="评论"></a>  
+							 							 	<span class="comment-num">评论</span>
+							 						  </div>
+						</div>
+						<div class="icon-warp">
+							 								<div class="follow-warp">
+									<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;sc&#39;])" data-track="sc-1-1" data-id="35100" href="javascript:" class="js-follow dc-follow  icon-nav icon-star2 " title="收藏"></a>
+																			<span>收藏</span>
+																	</div>
+													</div>    
+						
+						<p class="line"></p>
+
+
+						<div class="bdsharebuttonbox weichat-style bdshare-button-style0-16" data-bd-bind="1560823901314">
+							<div class="icon-warp2">
+								<a class="js-forward-btn imv2-forward icon-nav" href="https://www.imooc.com/article/35100#">
+								</a>
+								<!-- 只在第一次访问显示 -->
+																<p class="tip js-tip" style="display: none;">
+									<span class="text">点击这里，将文章分享到自己的动态</span>
+									<span class="js-close imv2-close"></span>
+								</p>
+															</div>
+							<div class="icon-warp2">
+								<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;wx&#39;])" data-track="letfshare-1-1" href="https://www.imooc.com/article/35100#" class="bds_weixin icon-nav icon-share-weichat share-icon" data-cmd="weixin" title="分享到微信"></a>
+							</div>
+							<div class="icon-warp2">
+								<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;wb&#39;])" data-track="letfshare-1-2" href="https://www.imooc.com/article/35100#" class="bds_tsina icon-nav icon-share-weibo share-icon" data-cmd="tsina" title="分享到新浪微博"></a>
+							</div>
+							<div class="icon-warp2">
+								<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;qq&#39;])" data-track="letfshare-1-3" href="https://www.imooc.com/article/35100#" class="bds_qzone icon-nav icon-share-qq share-icon" data-cmd="qzone" title="分享到QQ空间"></a>    
+							</div>                               
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- 分享&收藏 end -->
+	<div class="left_essay l">
+		<div class="part_essay js-part_essay">
+						<!-- 面包屑 -->
+			<div class="detail-path">
+				<a class="imooc" target="_blank" href="https://www.imooc.com/"><i class="imv2-imooc"></i></a>
+				<a href="https://www.imooc.com/article" target="_blank">手记</a>  /<a href="https://www.imooc.com/article/fe" target="_blank" class="js-column">前端开发</a>
+			</div>
+			<!-- 面包屑end -->       
+			<div class="detail-title-wrap">
+				<h1 class="detail-title">
+					<span class="d-t js-title">浅析JavaScript工厂模式</span>
+				</h1>
+				<div class="dc-profile clearfix">
+					<div class="l">
+						<span class="spacer">2018.06.11 20:00</span>
+						<span class="spacer spacer-2">887浏览</span>
+					</div>
+					<div class="r path-right-box">
+						<div class="rinfo l">
+																					
+							
+						</div> 
+					</div>	
+				</div>
+			</div> 
+
+			 <!-- 手记详情 -->
+			<div class="detail-content-wrap">  
+				<div class="detail-content js-lookimg">
+					
+					<div><p>这里主要介绍两种工厂模式，第一种“简单工厂模式”，第二种“工厂方法模式”</p><h1>简单工厂模式</h1><h2>1.定义</h2><p>由一个工厂对象决定对象创建某一种产品对象的的实例。主要用来创建同一类对象。</p><h2>2.具体需求</h2><p>现在有一个登录模块，当用户的输入的用户名多于16个时，给一个警示弹窗</p><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><pre>var&nbsp;LoginAlert&nbsp;=&nbsp;function(text)&nbsp;{&nbsp;&nbsp;this.content&nbsp;=&nbsp;text&nbsp;&nbsp;
+}
+
+LoginAlert.prototype.show&nbsp;=&nbsp;function()&nbsp;{&nbsp;&nbsp;//显示警示框&nbsp;&nbsp;}var&nbsp;userNameAlert&nbsp;=&nbsp;new&nbsp;LoginAlert('用户名不能多于16个字母或数字')
+userNameAlert.show()</pre><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><p>当用户输入的密码不正确时，给一个密码不正确的弹窗，心中暗喜，面对对象编程真好用，刚刚学完的类就能派上用场</p><pre>var&nbsp;passwordAlert&nbsp;=&nbsp;new&nbsp;LoginAlert('输入的密码啊不正确')
+passwordAlert.show();</pre><p>新需求：当用户登录时用户名不存在的时候弹窗提示“您的用户名不存在，请重新输入”，并在警示框上加一个注册按钮，完了，之前的累无法复用，又得创建一个类</p><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><pre>var&nbsp;LoginConfirm&nbsp;=&nbsp;function(text)&nbsp;{&nbsp;&nbsp;this.content&nbsp;=&nbsp;text&nbsp;&nbsp;
+}
+
+LoginConfirm.prototype.show&nbsp;=&nbsp;function()&nbsp;{&nbsp;&nbsp;//显示确认框&nbsp;&nbsp;}var&nbsp;loginFailConfrim&nbsp;=&nbsp;new&nbsp;LoginConfirm('您的用户名不存在，请重新输入')
+loginFailConfrim.show()</pre><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><p>新需求：当用户登录成功的时候给一个弹窗，除了有确认按钮和取消按钮，也提示一句‘欢迎回来，请输入您的心情’，这又得写一个新类</p><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><pre>var&nbsp;LoginPrompt&nbsp;=&nbsp;function(text)&nbsp;{&nbsp;&nbsp;this.content&nbsp;=&nbsp;text&nbsp;&nbsp;
+}
+
+LoginPrompt.prototype.show&nbsp;=&nbsp;function()&nbsp;{&nbsp;&nbsp;//显示确认框&nbsp;&nbsp;}</pre><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><p>新需求：现在有注册模块也要做，也有这些需求，这时候我们应该怎么办呢？</p><p>我们这个把这三个类封装在一个函数里，这时候我们只需要记住这个函数，然后通过这个函数就可以创建我们需要的对象，这样所有使用的人都不在关注这些对象到底依赖于哪些基类，我们知道这个函数就可以。这个函数我们通常也称为工厂函数，这种模式叫简单工厂模式，是工厂模式中最简单的一种形式</p><p>如何改造：</p><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><pre>var&nbsp;PopFactory&nbsp;=&nbsp;function(name)&nbsp;{&nbsp;&nbsp;switch(name)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'alert':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;LoginAlert();&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'confirm':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;LoginConfirm();&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'prompt':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;LoginPrompt();&nbsp;
+&nbsp;&nbsp;}&nbsp;&nbsp;
+}</pre><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><p>这样我们就实现了一个简单的工厂，使用者只要知道这个工厂和参数就行，但是这3个类用很多公有的方法，能不能提取出来？</p><p>现在我们把这三个类改成一个工厂模式，首先抽象他们的相同点，不如共有属性this.content,原型共有方法show，当然也有不同点，比如确认框和提示框的确定按钮，提示框的用户输入等等</p><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><pre>function&nbsp;createPop(type,&nbsp;text)&nbsp;{&nbsp;&nbsp;var&nbsp;o&nbsp;=&nbsp;new&nbsp;Object();
+&nbsp;&nbsp;o.content&nbsp;=&nbsp;text;
+&nbsp;&nbsp;o.show&nbsp;=&nbsp;function()&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//显示方法&nbsp;&nbsp;&nbsp;}&nbsp;if&nbsp;(type&nbsp;==&nbsp;'alert')&nbsp;{
+
+&nbsp;}&nbsp;if&nbsp;(type&nbsp;==&nbsp;'prompt')&nbsp;{
+
+&nbsp;}&nbsp;if&nbsp;(type&nbsp;==&nbsp;'confirm')&nbsp;{
+
+&nbsp;}&nbsp;&nbsp;
+}
+//创建警示框
+var&nbsp;userNameAlert&nbsp;=&nbsp;createPop('alert',&nbsp;'用户名只能是26个字母和数字')</pre><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><p>总结：团队开发不同于个人开发，其对全局变量限制很大，所以我们要尽量少的创建全局变量。对于同一类对象在不同需求中的重复性使用，很多时候不需要重复创建，代码复用是面向对象的一条准则</p><p>&nbsp;</p><h1>2.工厂方法模式</h1><h2>定义</h2><p>通过对产品类的抽象使其创造业务只要负责用户创建多类产品的实例</p><h2>具体需求</h2><p>网站首页要展示一个大批学科，字体和颜色不一</p><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><pre>var&nbsp;Java&nbsp;=&nbsp;function(content)&nbsp;{&nbsp;&nbsp;this.content&nbsp;=&nbsp;content
+&nbsp;&nbsp;(function()&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;div&nbsp;=&nbsp;document.createElement('div')
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;div.innerHtml&nbsp;=&nbsp;content;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;div.style.color&nbsp;=&nbsp;'green';
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dicument.getElementById('container').appendChild('div')&nbsp;&nbsp;
+&nbsp;&nbsp;})(content)&nbsp;&nbsp;
+}var&nbsp;Php&nbsp;=&nbsp;function(content)&nbsp;{&nbsp;&nbsp;//....}</pre><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><p>上节课学过的简单工厂模式派上了用场，赶紧去用简单的工厂模式去实现一下，这样以后再创建对象直接找工厂就行</p><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><pre>var&nbsp;Java&nbsp;=&nbsp;function(content)&nbsp;{&nbsp;&nbsp;this.content&nbsp;=&nbsp;content
+&nbsp;&nbsp;(function()&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;div&nbsp;=&nbsp;document.createElement('div')
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;div.innerHtml&nbsp;=&nbsp;content;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;div.style.color&nbsp;=&nbsp;'green';
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dicument.getElementById('container').appendChild('div')&nbsp;&nbsp;
+&nbsp;&nbsp;})(content)&nbsp;&nbsp;
+}var&nbsp;Php&nbsp;=&nbsp;function(content)&nbsp;{&nbsp;&nbsp;//....}var&nbsp;JavaScript&nbsp;=&nbsp;function(content)&nbsp;{&nbsp;//...}function&nbsp;JobFactory(type,&nbsp;content)&nbsp;{&nbsp;&nbsp;&nbsp;switch(type)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case:&nbsp;'java':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;Java(content)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case:&nbsp;'php':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;Php(content)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case:&nbsp;'javascript':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;JavaScript(content)
+&nbsp;&nbsp;&nbsp;}
+}</pre><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><p>新需求：现在又需要加一批UI学科，红色边框。</p><p>问题：需求一直在变，开始需求简单，直接创建对象，后来需求多了，用简单方法工厂方法重构，现在又变了，不仅仅要添加类，还要修改工厂函数，很麻烦，现在引入我们的工厂方法来解决这个问题</p><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><pre>Factory.prototype&nbsp;=&nbsp;{
+&nbsp;&nbsp;Java:function(content)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//...&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;JavaSctipt:function(content)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//...&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;Java:&nbsp;function(content)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//...&nbsp;&nbsp;}
+}</pre><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><p>这样我们如果要添加其他的类，只需要写在Factory这个工程类里面就行了</p><h2>安全的工厂方法</h2><p>安全的工厂方法是可以屏蔽一些使用过程中造成的错误，我们知道类前面不要有new的关键字，不过如果其他人不知道这个对象是一个雷，忽略了new关键字直接执行，此时得不到我们预期的对象，解决办法如下</p><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><pre>var&nbsp;Factory&nbsp;=&nbsp;function(type,&nbsp;content)&nbsp;{&nbsp;&nbsp;if&nbsp;(this&nbsp;instanceof&nbsp;Factory)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;s&nbsp;=&nbsp;new&nbsp;this[type](content)&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;s
+&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;Factory(type,&nbsp;content)
+&nbsp;&nbsp;&nbsp;}
+}
+Factory.prototype&nbsp;=&nbsp;{
+&nbsp;&nbsp;Java:function(content)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//...&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;JavaSctipt:function(content)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//...&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;Java:&nbsp;function(content)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//...&nbsp;&nbsp;}
+}</pre><p><a><img alt="复制代码" src="./浅析JavaScript工厂模式_慕课手记_files/5b1e6422000151e400200020.jpg" data-original="https://img4.mukewang.com/5b1e6422000151e400200020.jpg" class="" style="cursor: pointer; display: block;"></a></p><p>Javascript工厂模式介绍到此结束，有不对的地方请及时指出</p><p><a href="https://www.cnblogs.com/mianbaodaxia/p/9167677.html">原文出处</a></p><p><br></p></div>
+					<div>
+						<div class=""></div>
+						<div class="showMore"><span>点击查看更多内容</span></div>
+					</div>
+				</div>
+				<!-- 标签 -->
+												<div class="cat-box">
+					<div class="cat-wrap clearfix">
+																															<a class="cat l" href="https://www.imooc.com/article/tag/17" target="_blank">JavaScript</a>
+											</div>
+					                    				</div>
+								<!-- 推荐 --> 
+				<div class="praise-box">
+										<button id="js-praise"><span class="imv2-thumb_up"></span><div style="position: absolute; top: 50%; left: 50%; width: 230px; height: 230px; margin-left: -115px; margin-top: -115px; opacity: 0.6; display: none; transform: rotate(0deg) translate(0px, 0px);"><svg style="position: absolute; width: 100%; height: 100%;"><ellipse cy="0" cx="0" ry="15" rx="15" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="#F9B552" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse><ellipse cy="0" cx="0" ry="15" rx="15" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="#F9B552" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse><ellipse cy="0" cx="0" ry="15" rx="15" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="#F9B552" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse><ellipse cy="0" cx="0" ry="15" rx="15" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="#F9B552" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse><ellipse cy="0" cx="0" ry="15" rx="15" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="#F9B552" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse><ellipse cy="0" cx="0" ry="15" rx="15" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="#F9B552" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse></svg></div><div style="position: absolute; top: 50%; left: 50%; width: 180px; height: 180px; margin-left: -90px; margin-top: -90px; opacity: 0.6; display: none; transform: translate(0px, 0px);"><svg style="position: absolute; width: 100%; height: 100%;"><ellipse cy="90" cx="90" ry="0" rx="0" transform="rotate(0,90,90)" fill-opacity="transparent" stroke-linecap="" stroke-dashoffset="" fill="transparent" stroke-dasharray="" stroke-opacity="1" stroke-width="20" stroke="#F9B552"></ellipse></svg></div></button>
+										<div class="num-person"><em class="num">0</em>人点赞</div>
+					<div class="praise-share icon-drop_up hide">
+						<div class="praise-share-box">
+							<p>若觉得本文不错，就分享一下吧！</p>
+							<div class="share-content bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1560823901314">
+								<div class="icon-warp">
+									<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_top&#39;, &#39;share&#39;, &#39;wx&#39;])" data-track="topshare-1-1" href="https://www.imooc.com/article/35100#" class="bds_weixin icon-nav imv2-weixin_c share-icon" data-cmd="weixin" title="分享到微信"></a>
+								</div>
+								<div class="icon-warp">
+									<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_top&#39;, &#39;share&#39;, &#39;wb&#39;])" data-track="topshare-1-2" href="https://www.imooc.com/article/35100#" class="bds_tsina icon-nav imv2-weibo_c share-icon" data-cmd="tsina" title="分享到新浪微博"></a>
+								</div>
+								<div class="icon-warp">
+									<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_top&#39;, &#39;share&#39;, &#39;qq&#39;])" data-track="topshare-1-3" href="https://www.imooc.com/article/35100#" class="bds_qzone icon-nav imv2-qq_c share-icon" data-cmd="qzone" title="分享到QQ空间"></a>    
+								</div> 
+							</div>
+						</div>	
+					</div>
+				</div>
+				<!-- 推荐end -->
+			</div>
+
+			
+		</div>	
+		<div class="opus-wrap clearfix">
+			<div class="detail-left">
+				<div class="df-title" id="all_comments"><span class="comment-num"><i>0</i></span> 评论</div>
+				<div class="detail-feedback-wrap">
+					<!-- 评论框 -->
+					<div class="df-ipt-wrap clearfix" id="comment">
+					
+						<div class="feeds-author l">
+							
+							评论
+							
+						</div>
+						<p class="fadeInput l js-showcommentModal">共同学习，写下你的评论</p>
+					
+					</div>
+					<!-- 评论框end -->
+					<!-- 评论 -->
+					<div id="js-feedback-list-wrap" class="feedback-list js-feedback-lookimg"><p class="feedback-none">暂无评论</p></div>
+					<!-- 分页页码  -->
+					<!-- <div class="qa-comment-page hide"></div> -->
+
+					<div class="qa-comment-page hide" style="display: none;">
+						<div class="moreBtn js-more" data-page="2">展开查看更多评论</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="article_wrap">
+			<div class="line_con">
+				<p class="line"></p>
+				<p class="line_text">相关文章推荐</p>
+			</div>
+			<div class="article-wrapper">
+				<div class="articleCon js-articleCon js-usercard-box">
+					
+				<div class="article clearfix">                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/5bb70a5f0001245c17600984-200-200.jpg">                    </div>                    <div class="list-content l">                        <a href="https://www.imooc.com/article/251993" target="_blank" class="title"><p>工厂模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>10</span>                                </div>                                <div data-fuid="6408303" class="nickName l js-usercard-dialog" data-userid="6408303">wensu0</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/3" target="_blank"><span>JAVA</span></a><a><i class="imv2-dot_samll"></i></a><a href="https://www.imooc.com/article/tag/147" target="_blank"><span>设计模式</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">10.05</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/pic21.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/252590" target="_blank" class="title"><p>工厂模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>5</span>                                </div>                                <div data-fuid="6798219" class="nickName l js-usercard-dialog" data-userid="6798219">慕少1208348</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/17" target="_blank"><span>JavaScript</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">10.08</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/57b2d6080001644906400276-200-200.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/12263" target="_blank" class="title"><p>浅谈设计模式之抽象工厂模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>796</span>                                </div>                                <div data-fuid="2088112" class="nickName l js-usercard-dialog" data-userid="2088112">_Airing</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/3" target="_blank"><span>JAVA</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">08.16</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/57b2d5aa00016e5e06000600-200-200.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/12261" target="_blank" class="title"><p>浅谈设计模式之工厂方法模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>934</span>                                </div>                                <div data-fuid="2088112" class="nickName l js-usercard-dialog" data-userid="2088112">_Airing</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/3" target="_blank"><span>JAVA</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">08.16</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/5b114d010001115803070328-200-200.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/32366" target="_blank" class="title"><p>浅析Javascript单例模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>4</span>                                </div>                                <div data-fuid="6457952" class="nickName l js-usercard-dialog" data-userid="6457952">德玛西亚99</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/17" target="_blank"><span>JavaScript</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">06.01</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/5b3845aa0001f05401400098-200-200.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/40238" target="_blank" class="title"><p>JavaScript设计模式经典之简单工厂模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>4</span>                                </div>                                <div data-fuid="6457908" class="nickName l js-usercard-dialog" data-userid="6457908">喵喔喔</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/17" target="_blank"><span>JavaScript</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">07.01</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/pic24.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/13583" target="_blank" class="title"><p>设计模式--工厂模式--抽象工厂模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>1165</span>                                </div>                                <div data-fuid="2209766" class="nickName l js-usercard-dialog" data-userid="2209766">LxBilly</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/3" target="_blank"><span>JAVA</span></a><a><i class="imv2-dot_samll"></i></a><a href="https://www.imooc.com/article/tag/47" target="_blank"><span>设计</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">10.13</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/5bf3a0c10001bc2d02720272-200-200.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/270355" target="_blank" class="title"><p>设计模式之工厂模式与工厂方法模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>2</span>                                </div>                                <div data-fuid="6463771" class="nickName l js-usercard-dialog" data-userid="6463771">holdtom</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/3" target="_blank"><span>JAVA</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">12.29</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/pic12.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/257021" target="_blank" class="title"><p>设计模式-工厂模式二（工厂方法模式）</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>5</span>                                </div>                                <div data-fuid="6798209" class="nickName l js-usercard-dialog" data-userid="6798209">慕哥9229398</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/147" target="_blank"><span>设计模式</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">10.26</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/pic28.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/13557" target="_blank" class="title"><p>设计模式--工厂模式--工厂方法模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>851</span>                                </div>                                <div data-fuid="2209766" class="nickName l js-usercard-dialog" data-userid="2209766">LxBilly</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/3" target="_blank"><span>JAVA</span></a><a><i class="imv2-dot_samll"></i></a><a href="https://www.imooc.com/article/tag/47" target="_blank"><span>设计</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">10.12</div>                        </a></div><a>                    </a></div><a>                </a></div><ul class="clearfix"><li class="l"><a href="https://www.imooc.com/article/tag/88" target="_blank">小程序</a></li><li class="l"><a href="https://www.imooc.com/article/tag/50" target="_blank">React.JS</a></li><li class="l"><a href="https://www.imooc.com/article/tag/22" target="_blank">AngularJS</a></li><li class="l"><a href="https://www.imooc.com/article/tag/17" target="_blank">JavaScript</a></li><li class="l"><a href="https://www.imooc.com/article/tag/24" target="_blank">Bootstrap</a></li><li class="l"><a href="https://www.imooc.com/article/tag/121" target="_blank">webpack</a></li><li class="l"><a href="https://www.imooc.com/article/tag/25" target="_blank">CSS3</a></li><li class="l"><a href="https://www.imooc.com/article/tag/53" target="_blank">Sass/Less</a></li><li class="l"><a href="https://www.imooc.com/article/tag/52" target="_blank">Vue.js</a></li><li class="l"><a href="https://www.imooc.com/article/tag/15" target="_blank">JQuery</a></li></ul><div class="article clearfix">                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/pic12.jpg">                    </div>                    <div class="list-content l">                        <a href="https://www.imooc.com/article/256781" target="_blank" class="title"><p>抽象工厂模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>7</span>                                </div>                                <div data-fuid="6798212" class="nickName l js-usercard-dialog" data-userid="6798212">慕村9548890</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/147" target="_blank"><span>设计模式</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">10.25</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/pic2.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/257011" target="_blank" class="title"><p>设计模式-工厂模式三（抽象工厂模式）</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>5</span>                                </div>                                <div data-fuid="6798202" class="nickName l js-usercard-dialog" data-userid="6798202">慕码人8056858</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/147" target="_blank"><span>设计模式</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">10.26</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/5b364c400001f9f206700400-200-200.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/39873" target="_blank" class="title"><p>12. 简单工厂模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>5</span>                                </div>                                <div data-fuid="6458349" class="nickName l js-usercard-dialog" data-userid="6458349">慕莱坞森</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/58" target="_blank"><span>深度学习</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">06.29</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/pic11.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/257020" target="_blank" class="title"><p>设计模式-工厂模式一(简单工厂模式)</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>4</span>                                </div>                                <div data-fuid="6798209" class="nickName l js-usercard-dialog" data-userid="6798209">慕哥9229398</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/147" target="_blank"><span>设计模式</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">10.26</div>                        </a></div><a>                    </a></div><a>                </a></div><div class="article clearfix"><a>                    <div class="imgCon l">                        <img src="./浅析JavaScript工厂模式_慕课手记_files/pic5.jpg">                    </div>                    </a><div class="list-content l"><a>                        </a><a href="https://www.imooc.com/article/14884" target="_blank" class="title"><p>java设计模式--工厂模式</p></a>                        <div class="list-bottom clearfix">                            <div class="labels-area l clearfix">                                <div class="browseNum l">                                    <i class="imv2-visibility"></i>                                    <span>756</span>                                </div>                                <div data-fuid="3102126" class="nickName l js-usercard-dialog" data-userid="3102126">hydraWindy</div>                                <span class="skill clearfix"><a href="https://www.imooc.com/article/tag/3" target="_blank"><span>JAVA</span></a><a><i class="imv2-dot_samll"></i></a><a href="https://www.imooc.com/article/tag/47" target="_blank"><span>设计</span></a><a></a></span><a>                        </a></div><a>                            <div class="createTime r">11.29</div>                        </a></div><a>                    </a></div><a>                </a></div></div>
+				
+				<div class="feed-loading js-feed-loading" data-page="2">
+					<i class="imv2-loading"></i><span>正在加载中</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="right_recommend r">
+				<!-- 作者信息 -->
+		<div class="author_info js-author_info clearfix">
+			<a href="https://www.imooc.com/u/6457971/articles" class="l img_con" title="紫衣仙女" target="_blank">
+				<img src="./浅析JavaScript工厂模式_慕课手记_files/545850ee0001798a02200220-100-100.jpg">
+			</a>
+			<div class="text_con l">
+				<div class="name_con clearfix">
+					<p class="name l">
+					 	<a class="nick" href="https://www.imooc.com/u/6457971/articles" title="紫衣仙女" target="_blank">
+						紫衣仙女
+						</a>
+					</p>
+											<p class="forward">
+							<span class="js-add-follow" data-uid="6457971" data-type="1">关注</span>
+						</p>
+									</div>
+				<div class="job">
+					<span class="job-title" title=""></span>
+					<span class="job-icon">
+												       
+											</span>
+				</div>
+				<div class="contribution clearfix">
+					<a href="https://www.imooc.com/u/6457971/articles" target="_blank" class="js-article-num l">
+						<span>202</span> 篇手记
+					</a>
+					<a href="https://www.imooc.com/u/6457971/articles" target="_blank" class="js-article-words l">
+						贡献 <span>1895829</span> 字
+					</a>
+				</div>
+			</div>
+		</div>   
+		<!-- 作者信息end -->
+				<!-- 作者相关文章 -->
+				<div class="other_article js-other_article clearfix">
+			<div class="title l">作者相关文章</div>
+			<div class="more r">
+				<a href="https://www.imooc.com/u/6457971/articles" target="_blank">更多<i class="imv2-arrow2_r"></i></a>
+			</div>
+			<ul class="l">
+							<li class="article-item clearfix">
+					<i class="imv2-shouji l"></i>
+					<a href="https://www.imooc.com/article/30805" class="l" target="_blank">
+						BIM和CAD到底有些什么不一样？
+					</a>
+				</li>
+							<li class="article-item clearfix">
+					<i class="imv2-shouji l"></i>
+					<a href="https://www.imooc.com/article/27418" class="l" target="_blank">
+						专家推荐11个Chrome 插件
+					</a>
+				</li>
+							<li class="article-item clearfix">
+					<i class="imv2-shouji l"></i>
+					<a href="https://www.imooc.com/article/32467" class="l" target="_blank">
+						区块链的知识图谱
+					</a>
+				</li>
+							<li class="article-item clearfix">
+					<i class="imv2-shouji l"></i>
+					<a href="https://www.imooc.com/article/42403" class="l" target="_blank">
+						成长路上如何快速升级？你需要强大的自我驱动力
+					</a>
+				</li>
+							<li class="article-item clearfix">
+					<i class="imv2-shouji l"></i>
+					<a href="https://www.imooc.com/article/35095" class="l" target="_blank">
+						基于 Consul 实现 MagicOnion(GRpc) 服务注册与发现
+					</a>
+				</li>
+						</ul>
+		</div>
+				<!-- 作者相关文章end -->
+		<!-- 专栏推荐手记详情右侧 -->
+		<!--推荐专栏 手记首页右侧和手记详情页右侧使用此模块-->
+<div class="column_recommend">
+    <div class="title">
+        慕课专栏
+        <a href="https://www.imooc.com/read" target="_blank" class="more">更多<i class="imv2-arrow2_r"></i></a>
+    </div>
+    <ul>
+                    <li class="clearfix">
+                <a href="https://www.imooc.com/read/8" target="_blank">
+                    <div class="img l" style="background-image:url(//img2.mukewang.com/5c3dc7ae0001fc1f01800240.jpg)">
+                         
+                    </div>
+                </a>
+                <div class="text_con l">
+                    <a href="https://www.imooc.com/read/8" target="_blank">
+                        <p class="title">两小时学会 Node.js stream</p>
+                    </a>
+                    <div class="info">
+                        <span>共8小节</span>
+                        <i class="imv2-dot_samll"></i>
+                        <span>1366人已购买</span>
+                    </div>
+                    <div class="price_con clearfix">
+                                                    <a href="javascript:;" onclick="$(&#39;#js-signin-btn&#39;).click();">
+                                <div class="goBuy r">马上订阅</div>
+                            </a>
+                         
+                                                                                    <p class="ori l">¥ 9.99</p>
+                                                                            
+                    </div>
+                </div>
+            </li>
+                    <li class="clearfix">
+                <a href="https://www.imooc.com/read/13" target="_blank">
+                    <div class="img l" style="background-image:url(//img2.mukewang.com/5c247b0b0001a0a903600480.jpg)">
+                         
+                    </div>
+                </a>
+                <div class="text_con l">
+                    <a href="https://www.imooc.com/read/13" target="_blank">
+                        <p class="title">教你用 Python 进阶量化交易</p>
+                    </a>
+                    <div class="info">
+                        <span>共24小节</span>
+                        <i class="imv2-dot_samll"></i>
+                        <span>804人已购买</span>
+                    </div>
+                    <div class="price_con clearfix">
+                                                    <a href="javascript:;" onclick="$(&#39;#js-signin-btn&#39;).click();">
+                                <div class="goBuy r">马上订阅</div>
+                            </a>
+                         
+                                                                                    <p class="ori l">¥ 29.90</p>
+                                                                            
+                    </div>
+                </div>
+            </li>
+            </ul>
+</div>
+
+
+		<!-- 相关课程 -->
+		<div class="related_lessons js-related_lessons"><div class="title">相关课程</div><ul class="moco-aside-course"><li><div class="aside-course-img"><img src="./浅析JavaScript工厂模式_慕课手记_files/5c0493ce000126b106000338-360-202.jpg"><p class="aside-course-type">实战</p></div><div class="aside-course-content"><a href="https://coding.imooc.com/class/75.html?mc_marking=4655172e1a62839eea65105dbf244230&amp;mc_channel=sjkctjpc" class="aside-course-name" target="_blank">微信小程序入门与实战 常用组件API开发技巧项目实战</a><p class="aside-course-price"><span>￥149</span></p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-grade">初级</p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-people"><i class="imv2-set-sns"></i><span>17852</span></p></div></li><li><div class="aside-course-img"><img src="./浅析JavaScript工厂模式_慕课手记_files/595067d5000132a105400300-360-202.jpg"><p class="aside-course-type">实战</p></div><div class="aside-course-content"><a href="https://coding.imooc.com/class/115.html?mc_marking=4655172e1a62839eea65105dbf244230&amp;mc_channel=sjkctjpc" class="aside-course-name" target="_blank">前端JavaScript面试技巧</a><p class="aside-course-price"><span>￥149</span></p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-grade">初级</p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-people"><i class="imv2-set-sns"></i><span>3912</span></p></div></li><li><div class="aside-course-img"><img src="./浅析JavaScript工厂模式_慕课手记_files/59897b1600011ec805400300-360-202.jpg"><p class="aside-course-type">实战</p></div><div class="aside-course-content"><a href="https://coding.imooc.com/class/129.html?mc_marking=4655172e1a62839eea65105dbf244230&amp;mc_channel=sjkctjpc" class="aside-course-name" target="_blank">前端跳槽面试必备技巧</a><p class="aside-course-price"><span>￥266</span></p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-grade">中级</p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-people"><i class="imv2-set-sns"></i><span>3897</span></p></div></li><li><div class="aside-course-img"><img src="./浅析JavaScript工厂模式_慕课手记_files/53e1d0470001ad1e06000338-240-135.jpg"></div><div class="aside-course-content"><a href="https://www.imooc.com/learn/36?mc_marking=4655172e1a62839eea65105dbf244230&amp;mc_channel=sjkctjpc" class="aside-course-name" target="_blank">JavaScript入门篇</a><p class="aside-course-grade">入门</p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-people"><i class="imv2-set-sns"></i><span>650666</span></p></div></li><li><div class="aside-course-img"><img src="./浅析JavaScript工厂模式_慕课手记_files/574678bd00010a7206000338-240-135.jpg"></div><div class="aside-course-content"><a href="https://www.imooc.com/learn/10?mc_marking=4655172e1a62839eea65105dbf244230&amp;mc_channel=sjkctjpc" class="aside-course-name" target="_blank">JavaScript进阶篇</a><p class="aside-course-grade">入门</p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-people"><i class="imv2-set-sns"></i><span>413552</span></p></div></li><li><div class="aside-course-img"><img src="./浅析JavaScript工厂模式_慕课手记_files/599a7ab8000179c506000338-228-128.jpg"><p class="aside-course-type">就业班</p></div><div class="aside-course-content"><a href="https://class.imooc.com/sc/36?mc_marking=4655172e1a62839eea65105dbf244230&amp;mc_channel=sjkctjpc" class="aside-course-name" target="_blank">JavaScript基础入门 2018</a><p class="aside-course-price"><span>￥228</span></p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-grade">2步骤/9门课</p><div class="aside-course-dot"><i class="imv2-dot_samll"></i></div><p class="aside-course-people"><i class="imv2-set-sns"></i><span>547</span></p></div></li></ul></div>
+		<!-- 相关课程end -->
+	</div>
+</div>
+<div class="bottom-fixed js-bottom-fixed hide">
+	<ul class="bottom-wrap clearfix">
+		<!-- 推荐 --> 
+		<li class="praise-box l">
+						<button id="js-praise-bottom"><span class="imv2-thumb_up"></span></button>
+										<span class="praise-num">推荐</span>
+					</li>
+		<!-- 推荐end -->
+		<li class="icon-warp l">
+			<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;pl&#39;])" data-track="pl-1-1" href="https://www.imooc.com/article/35100#comment" class="icon-nav imv2-chat_bubble" title="评论"></a>  
+							<span class="comment-num">评论</span>
+					</li>
+		<li class="icon-warp l">
+							<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;sc&#39;])" data-track="sc-1-1" data-id="35100" href="javascript:" class="js-follow icon-nav icon-star2 " title="收藏"></a>
+				<span>收藏</span>   
+					</li>    
+		<li class="input l js-showcommentModal">共同学习，写下你的评论</li>
+		<li class="icon-warp2 l">
+			<a class="js-forward-btn imv2-forward icon-nav2" href="https://www.imooc.com/article/35100#">
+			</a>
+			<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;wx&#39;])" data-track="letfshare-1-1" href="https://www.imooc.com/article/35100#" class="bds_weixin icon-nav2 icon-share-weichat share-icon" data-cmd="weixin" title="分享到微信"></a>
+			<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;wb&#39;])" data-track="letfshare-1-2" href="https://www.imooc.com/article/35100#" class="bds_tsina icon-nav2 icon-share-weibo share-icon" data-cmd="tsina" title="分享到新浪微博"></a>
+			<a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;sjtj_left&#39;, &#39;share&#39;, &#39;qq&#39;])" data-track="letfshare-1-3" href="https://www.imooc.com/article/35100#" class="bds_qzone icon-nav2 icon-share-qq share-icon" data-cmd="qzone" title="分享到QQ空间"></a>                                  
+		</li>
+	</ul>
+</div>
+
+
+
+
+<div class="hide">
+	<input type="hidden" data-pic="5b1e643900013e5b05000333" id="js-share-img">
+	<input type="hidden" data-pic="//img4.mukewang.com/545850ee0001798a02200220-100-100.jpg" id="js-img-author">
+</div>
+<div class="r"></div>
+
+</div>
+
+
+<div id="J_GotoTop" class="elevator">
+    <a href="https://www.imooc.com/user/feedback" class="elevator-msg" target="_blank">
+        <i class="icon-feedback"></i>
+        <span class="">意见反馈</span>
+    </a>
+    <a href="https://order.imooc.com/pay/sharegoods" class="elevator-dist js-hide-in-act" style="display: none;" target="_blank">
+        <i class=""></i>
+        <span class="">分销返利</span>
+    </a>
+    <a href="https://www.imooc.com/act/invite" class="elevator-dist js-activity" style="display: block;" target="_blank">
+        <i class=""></i>
+        <span class="">邀请有奖</span>
+    </a>
+    <a href="https://www.imooc.com/help" class="elevator-faq" target="_blank">
+        <i class="icon-ques"></i>
+        <span class="">帮助中心</span>
+    </a>
+    <a href="https://www.imooc.com/mobile/app" target="_blank" class="elevator-app">
+        <i class="icon-appdownload"></i>
+        <span class="">APP下载</span>
+        <div class="elevator-app-box"></div>
+    </a>
+    <a href="javascript:void(0)" class="elevator-weixin no-goto" id="js-elevator-weixin">
+        <i class="icon-wxgzh"></i>
+        <span class="">官方微信</span>
+        <div class="elevator-weixin-box"></div>
+    </a>
+    <a href="javascript:void(0)" class="elevator-top no-goto" style="display: none;" id="backTop">
+        <i class="icon-up2"></i>
+        <span class="">返回顶部</span>
+    </a>
+</div>
+
+
+<div id="globalRightFloat" style="display: block;"><div><div class="close-adv imv2-close_c"></div><img src="./浅析JavaScript工厂模式_慕课手记_files/5cfd310f098d320701020102-160-160.jpg"></div></div>
+
+
+
+
+<script type="text/javascript" charset="utf-8" src="./浅析JavaScript工厂模式_慕课手记_files/ueditor.final.min.js.下载"></script><script src="./浅析JavaScript工厂模式_慕课手记_files/visual"></script>
+
+
+<!--script-->
+<script type="text/javascript" src="./浅析JavaScript工厂模式_慕课手记_files/error.js.下载"></script>
+<script src="./浅析JavaScript工厂模式_慕课手记_files/ssologin.js.下载"></script>
+<script type="text/javascript" src="./浅析JavaScript工厂模式_慕课手记_files/sea.js.下载"></script>
+<script type="text/javascript" src="./浅析JavaScript工厂模式_慕课手记_files/sea_config.js.下载"></script>
+<script type="text/javascript">seajs.use("/static/page/"+OP_CONFIG.module+"/"+OP_CONFIG.page);</script>
+
+<script type="text/javascript" src="./浅析JavaScript工厂模式_慕课手记_files/dist-zhuge.js.下载"></script>
+
+<script type="text/javascript">seajs.use("/static/page/common/advertiseCheck.js");</script>
+<script>
+    //动态加载advertisementReportjs
+
+    var checkJQ = function(){
+        // console.log(typeof jQuery)
+       if(typeof jQuery != 'undefined') {
+           clearInterval(timer);
+           var scr = document.createElement('script');
+           scr.type="text/javascript";
+           scr.src="/static/page/common/advertisementReport.js";
+           document.body.appendChild(scr);
+
+       }
+    }
+    var timer = setInterval(checkJQ,1000);
+
+</script>
+
+
+<script src="./浅析JavaScript工厂模式_慕课手记_files/captcha.min.js.下载"></script>
+<script>
+	// 处理长篇幅文章部分显示
+	var hideArticleInterval, htmlFilterInterval;
+	(function() {
+		hideArticleInterval = setInterval(function() {
+			contentEl = document.querySelector('.detail-content');
+			var height = contentEl.offsetHeight;
+			if(contentEl && height > 0) {
+				clearInterval(hideArticleInterval);
+				hideArticleInterval = null;
+				if(height > 3000) {
+					contentEl.className += ' long-content';
+				}
+				document.querySelector('.showMore span').addEventListener('click', function() {
+					$('.detail-content').removeClass('long-content');
+				});
+			}
+		},5);
+		htmlFilterInterval = setInterval(function() {
+			var articleBox = document.getElementById('article_content');
+			if(window.$ && $.fn.lazyload && articleBox) {
+				clearInterval(htmlFilterInterval);
+				htmlFilterInterval = null;
+				$(articleBox).replaceWith(articleEl);
+				if(twemoji){
+					twemoji.parse(document.body);
+				}
+				$('img.lazyload').lazyload({
+					load: function() {
+						$(this).removeClass('lazyload');
+					}
+				});
+			}
+		},5);
+	}());
+</script>
+<script>
+window.onload = function() {
+	zhuge.track('ContentPage', {
+			'Category': '手记',
+			'Name': '浅析JavaScript工厂模式',
+			'CID': '35100',
+			'Direction': '前端开发',
+			'Price': 0
+	});
+}
+</script>
+
+<div class="tipoff-block js-tipoff-block"></div>
+<div class="tipoff-box js-tipoff-box">
+	<div class="tipoff-top-box clearfix">
+		<p class="l tipoff-title">举报</p>
+		<span class="r tipoff-close-btn icon-close2 js-tipoff-close"></span>
+	</div>
+	<div class="tipoff-type-box js-tipoff-typebox clearfix">
+		<div class="tipoff-loading">
+		  	<div class="bounce1"></div>
+			<div class="bounce2"></div>
+			<div class="bounce3"></div>
+		</div>
+	</div>
+	<div class="tipoff-content">
+		<textarea name="tipoff-content" class="tipoff-desc js-tipoff-desc" placeholder="写下举报理由"></textarea>
+		<div class="tipoff-text"><span class="js-tipoff-text">0</span>/150</div>
+	</div>
+	<div class="tipoff-btn-box clearfix">
+		<div class="r tipoff-submit-btn js-tipoff-submit" data-tipofftype="">提交</div>
+		<div class="r tipoff-cancel-btn js-tipoff-close">取消</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+<div style="display: none">
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?f0cfcccd7b1393990c78efdeebff3968";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+(function (d) {
+window.bd_cpro_rtid="rHT4P1c";
+var s = d.createElement("script");s.type = "text/javascript";s.async = true;s.src = location.protocol + "//cpro.baidu.com/cpro/ui/rt.js";
+var s0 = d.getElementsByTagName("script")[0];s0.parentNode.insertBefore(s, s0);
+})(document);
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</div>
+
+
+<script type="text/javascript" src="./浅析JavaScript工厂模式_慕课手记_files/advertisementReport.js.下载"></script><div></div><div style="position: absolute; top: 100px; left: 100px; width: 164px; height: 164px; margin-left: -82px; margin-top: -82px; opacity: 1; display: none; transform: rotate(0deg) translate(0px, 0px);"><svg style="position: absolute; width: 100%; height: 100%;"><ellipse cy="0" cx="0" ry="7" rx="7" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="deeppink" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse><ellipse cy="0" cx="0" ry="7" rx="7" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="deeppink" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse><ellipse cy="0" cx="0" ry="7" rx="7" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="deeppink" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse><ellipse cy="0" cx="0" ry="7" rx="7" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="deeppink" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse><ellipse cy="0" cx="0" ry="7" rx="7" transform="rotate(0,0,0)" fill-opacity="1" stroke-linecap="" stroke-dashoffset="NaN " fill="deeppink" stroke-dasharray="NaN " stroke-opacity="1" stroke-width="0" stroke="transparent" style="opacity: 1; display: none;"></ellipse></svg></div></body></html>

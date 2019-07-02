@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <ul style="display: none">
+        <li>斗鱼</li>
+        <li>电影</li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <script>
+        var input = document.querySelector("input")
+        var arr = [{
+            title: "八维",
+            bigWord: "bw",
+            pinyin: "bawei"
+        }, {
+            title: "八维星空",
+            bigWord: "bwxk",
+            pinyin: "baweixingkong"
+        }, {
+            title: "八维文化",
+            bigWord: "bwwh",
+            pinyin: "baweiwenhua"
+        }]
+        var ul = document.querySelector("ul")
+        input.oninput = function () {
+            ul.style.display = "block"
+            var a = arr.filter(function (item) {
+                return item.title.indexOf(input.value) !== -1 || item.bigWord.indexOf(input.value) !== -1 || item.pinyin.indexOf(input.value) !== -1
+            })
+
+            render(a)
+        }
+        ul.onclick = function (e) {
+            var tar = e.target
+            if (tar.nodeName === "LI") {
+                input.value = tar.innerHTML
+                ul.style.display = "none"
+            }
+        }
+        function render(data) {
+            ul.innerHTML = data.map(function (item) {
+                console.log(item)
+                return ` <li>${item.title}</li>`
+            }).join("")
+        }
+
+        render(arr)
+    </script>
+</body>
+
+</html>

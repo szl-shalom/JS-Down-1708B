@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 类式继承
+
+
+        // 父类
+        function SuperClass() {
+            this.superClassValue = [1, 2, 3]
+        }
+        // 父类的原型
+        SuperClass.prototype.getSuperClass = function () {
+            return this.superClassValue
+        }
+        // 子类
+        function SubClass() {
+            this.subClassValue = false
+        }
+        // 子类的原型等于父类的实例化对象
+        SubClass.prototype = new SuperClass()
+        // 给子类原型添加方法
+        SubClass.prototype.getSubClass = function () {
+            return this.subClassValue
+        }
+        // 实例化对象
+        var a = new SubClass()
+        var b = new SubClass()
+
+        // 问题一 共享父类中的实例对象  
+        a.superClassValue.push(4)
+        console.log(b)
+        // 问题二 不能向父类传递参数
+
+    </script>
+</body>
+
+</html>

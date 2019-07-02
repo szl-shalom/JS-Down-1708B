@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    div {
+        margin-bottom: 10px;
+    }
+
+    p {
+        display: inline-block;
+        width: 500px;
+        background: #ccc;
+        height: 35px;
+        border-radius: 25px;
+        overflow: hidden;
+    }
+
+    span {
+        display: inline-block;
+        line-height: 35px;
+        height: 35px;
+        width: 0;
+        transition: all 1s
+    }
+</style>
+
+<body>
+    <!-- <div>
+        <p>
+            <span></span>
+        </p>
+    </div> -->
+
+
+    <script>
+        var arr = [{
+            name: "北京",
+            pay: 18569,
+        }, {
+            name: "上海",
+            pay: 17569,
+        }, {
+            name: "杭州",
+            pay: 15569,
+        }, {
+            name: "深圳",
+            pay: 14569,
+        }, {
+            name: "重庆",
+            pay: 11569,
+        }, {
+            name: "石家庄",
+            pay: 8569,
+        }, {
+            name: "邯郸",
+            pay: 6569,
+        }, {
+            name: "上海",
+            pay: 17569,
+        }, {
+            name: "杭州",
+            pay: 15569,
+        }, {
+            name: "上海",
+            pay: 17569,
+        }, {
+            name: "杭州",
+            pay: 15569,
+        },]
+
+        var html = ""
+
+
+
+        arr.forEach(function (item) {
+            var div = document.createElement("div"),
+                p = document.createElement("p"),
+                span = document.createElement("span");
+
+            p.appendChild(span)
+            div.appendChild(p)
+
+            span.style.background = getColor()
+
+            var count = 0
+
+            var timer = setInterval(function () {
+                count += 100
+                span.innerHTML = item.name + count
+
+                if (count > item.pay) {
+                    span.innerHTML = item.name + item.pay
+                    clearInterval(timer)
+                }
+            }, 1)
+
+
+
+            setTimeout(function () {
+                span.style.width = (item.pay / 20000 * 100) + "%"
+
+            }, 0)
+
+
+            document.body.appendChild(div)
+
+        })
+
+        function random(n, m) {
+            return Math.floor(Math.random() * (m - n + 1) + n)
+        }
+        function getColor() {
+            var str = `#`
+            for (var i = 0; i < 6; i++) {
+                str += random(0, 15).toString(16)
+            }
+            return str;
+        }
+    </script>
+</body>
+
+</html>

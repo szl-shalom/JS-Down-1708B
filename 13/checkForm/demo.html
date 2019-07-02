@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="ElongLogin" class="formbox">
+        <div class="inputbox login_id">
+            <span class="icon"></span>
+            <input class="blur" type="text" id="UserName" placeholder="用户名/卡号/手机号/邮箱">
+            <div class="input_tip" name="input_error_tip" style="display: none;"> 您输入的用户名不匹配，请重新输入！
+            </div>
+        </div>
+        <div class="inputbox login_pw" id="input_password">
+            <span class="icon"></span>
+            <input class="blur" type="text" method="PassWord" id="PassWord">
+            <div class="input_tip" name="input_error_tip" style="display: none;">您输入的密码不匹配，要求是3-6位的非纯字母或数字请重新输入！
+            </div>
+        </div>
+        <div class="inputbox">
+            <input class="test" type="text" placeholder="验证码" id="ValidateCode">
+            <p class="test-wrap">QNMP</p>
+            <a href="#?" id="ValidateHref">换一张</a>
+            <div class="input_tip input_tip_yzm" id="validate_result" style="display: none;">您输入的验证码有误</div>
+        </div>
+        <a class="loginbtn" href="#?" usable="true" id="LoginSubmit">登录</a>
+    </div>
+    <script src="js/1.js">
+    </script>
+</body>
+
+</html>

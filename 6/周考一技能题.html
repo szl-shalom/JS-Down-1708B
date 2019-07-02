@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		ul {
+			height: 50px;
+		}
+
+		ul li {
+			width: 100px;
+			height: 40px;
+			float: left;
+			padding: 0 5px;
+			line-height: 50px;
+			text-align: center;
+			border-bottom: 1px solid #ccc;
+		}
+
+		#bottom {
+			clear: both;
+		}
+
+		ul li span {
+			padding: 0 5px;
+			text-align: center;
+		}
+
+		button {
+			display: inline-block;
+			width: 200px;
+			height: 45px;
+			color: white;
+			background: green;
+		}
+
+		button.col {
+			background: #ccc;
+			color: black;
+		}
+
+		ul li.bor {
+			border: 1px solid #ccc;
+			border-bottom: none;
+		}
+
+		ul li span:hover {
+			background: orange;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="box">
+
+		<ul class="ul">
+			<li class='bor'>网络设置<span>X</span></li>
+			<li>用户管理<span>X</span></li>
+			<li>权限分配<span>X</span></li>
+			<li class="daweq">商品管理<span>X</span></li>
+			<li>订单管理<span>X</span></li>
+		</ul>
+
+		<div id="class">
+			<p id="content">内容1</p>
+			<button id="add">新增选项</button>
+			<button id="remove">删除:商品管理</button>
+			<button>切换到:用户管理</button>
+		</div>
+	</div>
+
+	<script>
+		var ul = document.querySelector(".ul"),
+			p = document.querySelector("#content"),
+			add = document.querySelector("#add"),
+			remove = document.querySelector("#remove")
+
+		ul.onclick = function (e) {
+			// console.log(e)
+			var tar = e.target
+
+			// console.log(tar)
+
+			if (tar.nodeName === "SPAN") {
+				// 删除
+
+				delDom(tar.parentNode)
+			}
+
+			if (tar.nodeName === "LI") {
+				// tab切换
+				var bor = ul.querySelector(".bor")
+
+				if (bor !== null) {
+					bor.classList.remove("bor")
+				}
+
+				tar.classList.add("bor")
+				console.log(tar.firstChild.nodeValue)
+				p.innerHTML = tar.firstChild.nodeValue
+			}
+		}
+
+		add.onclick = function () {
+			var html = `<li>${random(1, 1000)}<span>X</span></li>`
+			ul.innerHTML += html
+
+		}
+		remove.onclick = function () {
+			var daweq = document.querySelector(".daweq")
+			if (daweq !== null) {
+				delDom(daweq)
+			}
+		}
+
+		function delDom(el) {
+			el.parentNode.removeChild(el)
+		}
+
+
+		function random(n, m) {
+			return Math.floor(Math.random() * (m - n + 1) + n)
+		}
+	</script>
+</body>
+
+</html>

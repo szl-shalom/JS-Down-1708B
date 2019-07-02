@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>楼层滚动</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body style="height: 6000px;">
+    <h1>北京八维滚动系统</h1>
+    <h2>我是导航条</h2>
+    <div class="floor">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+        </ul>
+    </div>
+
+    <div class="scroll">
+        <ul>
+            <li ind="0">1</li>
+            <li ind="1">2</li>
+            <li ind="2">3</li>
+            <li ind="3">4</li>
+            <li ind="4">5</li>
+            <li ind="5">6</li>
+            <li ind="6">7</li>
+            <li ind="7">8</li>
+        </ul>
+    </div>
+    <script>
+        var h2 = document.querySelector("h2")
+        var floor = document.querySelector(".floor")
+        var h2Top = h2.offsetTop
+        var floorLis = [...floor.querySelectorAll("li")].map(function (item) { return item.offsetTop })
+        var scrollLis = [...document.querySelectorAll(".scroll li")]
+        var scroll = document.querySelector(".scroll")
+        document.onscroll = function () {
+            // 导航条吸顶效果
+            var scrollTop = document.documentElement.scrollTop //滚动条滚动距离
+            // 进行判断 
+            if (scrollTop > h2Top) {
+                h2.classList.add("active")
+                floor.style.marginTop = h2.offsetHeight + "px"
+            } else {
+                h2.classList.remove("active")
+                floor.style.marginTop = 0
+            }
+
+            // 楼层滚动判断
+            // console.log(scrollTop)
+
+
+
+            floorLis.forEach(function (item, index) {
+                if (scrollTop >= item - 100) {
+                    document.querySelector(".scroll li.active") ? document.querySelector(".scroll li.active").classList.remove("active") : ''
+                    scrollLis[index].classList.add("active")
+                }
+            })
+
+        }
+
+
+        scroll.onclick = function (e) {
+            var tar = e.target
+            if (tar.nodeName === "LI") {
+                var index = tar.getAttribute("ind")
+                document.documentElement.scrollTop = floorLis[index] - 100
+            }
+        }
+
+
+
+
+
+
+        // var floor = document.querySelector(".floor")
+        // var lis = [...document.querySelectorAll(".floor li")]
+        // var lisTop = [...document.querySelectorAll(".floor li")].map(function (item) { return item.offsetTop - 100 })
+        // var h2 = document.querySelector("h2")
+        // var h1 = document.querySelector("h1")
+        // var h2Scroll = h2.offsetTop
+        // var scrollLis = document.querySelectorAll(".scroll li")
+        // document.onscroll = function () {
+        //     scrollTop = document.documentElement.scrollTop
+        //     lisTop.forEach(function (item, index) {
+        //         var next = index === lis.length - 1 ? 10000 : lisTop[index + 1]
+        //         if (scrollTop >= item && scrollTop < next) {
+        //             document.querySelector(".scroll li.active") ? document.querySelector(".scroll li.active").classList.remove("active") : ""
+        //             scrollLis[index].classList.add("active")
+        //         }
+        //     })
+
+        //     if (scrollTop > h2Scroll) {
+        //         h2.classList.add("active")
+        //         floor.classList.add("active")
+        //     } else {
+        //         h2.classList.remove("active")
+        //         floor.classList.remove("active")
+        //     }
+
+        // }
+        // document.querySelector(".scroll").onclick = function (e) {
+        //     var tar = e.target;
+        //     if (tar.nodeName === "LI") {
+        //         document.documentElement.scrollTop = lisTop[tar.getAttribute("ind")]
+        //     }
+        // }
+
+
+
+    </script>
+</body>
+
+</html>

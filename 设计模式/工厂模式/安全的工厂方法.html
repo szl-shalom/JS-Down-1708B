@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 安全的工厂模式
+        var Factory = function (type, content) {
+            if (this instanceof Factory) {
+                return new this[type](content)
+            } else {
+                return new Factory(type, content)
+            }
+        }
+        Factory.prototype = {
+            java: function (content) {
+                console.log("这里是java" + content)
+            },
+            php: function (content) {
+                console.log("这里是php" + content)
+            }
+        }
+
+        var arr = [{
+            type: "java",
+            content: "JAVA"
+        }, {
+            type: "php",
+            content: "PHP"
+        }]
+
+        arr.forEach(function (item) {
+            Factory(item.type, item.content)
+        })
+
+    </script>
+</body>
+
+</html>

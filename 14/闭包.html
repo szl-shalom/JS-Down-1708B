@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <script>
+        // 作用域问题
+        // 注意：在非ES6中，只有函数拥有局部局部作用域
+        // var lis = [...document.querySelectorAll("li")]
+        // for (let i = 0; i < lis.length; i++) {
+        //     // (function (i) {
+        //         lis[i].onclick = function () {
+        //             console.log(i)
+        //         }
+        //     // })(i)
+        // }
+
+
+        // 什么是闭包？
+        // 函数的数据被保存的外部 => 发生闭包 => 内存不释放[作用域不释放]
+
+        // 闭包的好处？闭包的危害？
+
+        // 什么是内存泄漏？
+
+
+
+        function add() {
+            var num = 1
+            return function () {
+                num++
+                console.log(num)
+            }
+        }
+
+        var a = add()
+
+        a()
+        a()
+        a()
+
+
+    </script>
+</body>
+
+</html>

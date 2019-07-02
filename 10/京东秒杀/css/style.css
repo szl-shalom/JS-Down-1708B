@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.wrap {
+    width: 992px;
+    height: 276px;
+    border: 1px solid #ccc;
+    margin: 20px auto;
+}
+
+.seckill {
+    width: 192px;
+    height: 276px;
+    background: #E83632;
+    float: left;
+}
+
+.seckill h1 {
+    line-height: 70px;
+    color: #fff;
+    text-align: center;
+}
+
+.c_time {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.c_time span {
+    display: inline-block;
+    width: 30px;
+    height: 35px;
+    background: #000;
+    margin-right: 10px;
+    color: #fff;
+    text-align: center;
+    line-height: 35px;
+    font-size: 18px;
+}
+
+.product {
+    position: relative;
+    width: 800px;
+    height: 276px;
+    float: left;
+    overflow: hidden;
+}
+
+.product span {
+    position: absolute;
+    width: 20px;
+    height: 80px;
+    background: #333;
+    color: #fff;
+    top: 50%;
+    margin-top: -40px;
+    line-height: 80px;
+    text-align: center;
+    z-index: 9;
+    cursor: pointer;
+    /* cursor:not-allowed */
+}
+
+.next {
+    right: 0;
+}
+
+.p_all {
+    height: 276px;
+    width: 2400px;
+    text-align: center;
+    transition: margin-left .4s;
+}
+
+.product dl {
+    border-right: 1px solid #ccc;
+    width: 199px;
+    height: 276px;
+    float: left;
+}
+
+.product dt {
+    position: relative;
+    height: 220px;
+}
+
+.product dt img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+
+.product dd {
+    width: 90%;
+    margin: 0 auto;
+    height: 36px;
+    line-height: 36px;
+    background: #E83632;
+    color: #fff;
+}

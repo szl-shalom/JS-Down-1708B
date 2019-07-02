@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background: black;
+}
+
+.wrap {
+    /* width:  */
+}
+
+.swiper-container {
+    height: 600px;
+    width: 1200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid red;
+    margin-left: -600px;
+    margin-top: -300px;
+    overflow: hidden;
+
+}
+
+.swiper-wrapper {
+    height: 600px;
+    width: 3600px;
+    /* margin-left: -2400px; */
+    transition: margin-left .5s;
+}
+
+.swiper-slide {
+    height: 600px;
+    width: 1200px;
+    float: left;
+}
+
+.swiper-slide>img {
+    height: 100%;
+    width: 100%;
+}
+
+.swiper-button-pre {
+    height: 180px;
+    width: 80px;
+    background: rgba(0, 0, 0, .2);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -90px;
+    text-align: center;
+    line-height: 180px;
+    font-size: 36px;
+}
+
+.swiper-button-next {
+    height: 180px;
+    width: 80px;
+    background: rgba(0, 0, 0, .2);
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -90px;
+    text-align: center;
+    line-height: 180px;
+    font-size: 36px;
+}
+
+.swiper-pagination {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    /* border: 1px solid red; */
+}
+
+
+.swiper-pagination ul {
+    text-align: center;
+}
+
+.swiper-pagination ul li {
+    display: inline-block;
+    margin-left: 20px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ccc;
+}
+
+
+.swiper-pagination ul li.active {
+    background: red;
+}

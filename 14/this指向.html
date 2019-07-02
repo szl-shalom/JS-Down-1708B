@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box">123</div>
+    <script>
+        // "use strick" // 开启严格模式 
+        // 注意：非严格模式下
+
+        // this指向问题
+        // this指向执行期上下文环境对象
+
+        // 1全局中的this指向window
+        // console.log(this)
+        // 2 直接调用函数中的this指向window
+        // function fn() {
+        //     console.log(this)
+        // }
+        // fn()
+        // 3 对象调用函数中的this指向该对象
+        // var obj = {
+        //     fn: function () {
+        //         console.log(this)
+        //     }
+        // }
+        // obj.fn()
+        // 4 事件驱动函数中的this指向绑定的元素
+
+        // 5 构造函数中的this指向 实例化对象
+
+
+        // 问题1
+        // function fn1() {
+        //     function fn2() {
+        //         console.log(this);
+        //     }
+        //     fn2();
+        // }
+        // fn1();
+        // 问题2
+        // function fn() {
+        //     console.log(this)
+        // }
+
+        // box.onclick = function () {
+        //     fn();
+        // }
+        // 问题3
+        // var obj = {
+        //     x: 100,
+        //     fn: function () {
+        //         console.log(this);
+        //     }
+        // }
+
+        // var a = obj.fn;
+        // a();
+
+        // 问题4
+        function a() {
+            return {
+                name: 1,
+                b: function () {
+                    console.log(this);
+                }
+            }
+        }
+        // a().b();
+        // 问题5
+        // function Student() {
+        //     this.name = 1;
+        //     this.age = 2;
+        //     this.sayName = function () {
+        //         console.log(this);
+        //     }
+        // }
+        // new Student().sayName();
+
+        // 问题6  经典面试题
+        // var c = (function (fn) {
+        //     this.a = fn;
+        //     return function (b) {
+        //         return b + this.a;
+        //     }
+        // }(function (a) {
+        //     return a
+        // }(1, 2)))(3);
+
+        // console.log(c);
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>放大镜</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+
+    <div class="small-box">
+        <img src="./images/3.jpg" alt="">
+        <div class="small-box1"></div>
+    </div>
+    <div class="big-box"></div>
+
+    <script>
+        var smallBox = document.querySelector(".small-box"),
+            smallBox1 = document.querySelector(".small-box1"),
+            img = document.querySelector("img"),
+            bigBox = document.querySelector(".big-box");
+            
+
+        // console.log(aa)
+        // smallBox.style = "1"
+        smallBox.onmouseover = function () {
+            smallBox1.style.display = "block"
+            bigBox.style.display = "block"
+
+            bigBox.style.backgroundImage = `url(${img.src})`
+            yy = smallBox.offsetWidth / smallBox1.offsetWidth
+            bigBox.style.backgroundSize = `${bigBox.offsetWidth * yy}px ${bigBox.offsetHeight * yy}px`
+
+            document.onmousemove = function (e) {
+                var x = e.clientX,
+                    y = e.clientY,
+                    left = x - smallBox1.offsetWidth / 2,
+                    top = y - smallBox1.offsetHeight / 2;
+                left < 0 ? left = 0 : null
+                top < 0 ? top = 0 : ""
+                left > smallBox.offsetWidth - smallBox1.offsetWidth ? left = smallBox.offsetWidth - smallBox1.offsetWidth : null
+                top > smallBox.offsetHeight - smallBox1.offsetHeight ? top = smallBox.offsetHeight - smallBox1.offsetHeight : null
+                smallBox1.style.left = left + "px"
+                smallBox1.style.top = top + "px"
+
+                bigBox.style.backgroundPosition = `-${left * yy}px -${top * yy}px`
+            }
+        }
+
+        smallBox.onmouseout = function () {
+            smallBox1.style.display = "none"
+            bigBox.style.display = "none"
+
+        }
+    </script>
+</body>
+
+</html>

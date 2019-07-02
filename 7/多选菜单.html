@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <input type="checkbox" class="All">全选
+    </div>
+
+
+    <div class="qwe">
+        <input type="checkbox" name="" id="" class="one">
+        <input type="checkbox" name="" id="" class="one">
+        <input type="checkbox" name="" id="" class="one">
+        <input type="checkbox" name="" id="" class="one">
+        <input type="checkbox" name="" id="" class="one">
+        <input type="checkbox" name="" id="" class="one">
+    </div>
+    <script>
+        // console.log(this)
+        // console.log(window)
+        var all=document.querySelector(".All");
+        var qwe=document.querySelector(".qwe");
+       var  inputs=[...document.querySelectorAll("input")];
+        all.onclick=function(){
+            inputs.forEach(function(item){
+              
+            })
+        }
+            
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    dd {
+        height: 50px;
+        width: 50px;
+        border: 1px solid red;
+    }
+</style>
+
+<body>
+    <div class="top">
+        <input type="text" class="search">
+        <select name="" id="sort">
+            <option value="">请选择</option>
+            <option value="">按价钱排序</option>
+        </select>
+    </div>
+    <div class="content">
+        <dl>
+            <dd>
+                <img src="" alt="">
+            </dd>
+            <dt>
+                <p>标题</p>
+                <p>内容</p>
+            </dt>
+        </dl>
+    </div>
+    <script>
+        var data = [{
+            img: "",
+            title: "我是标题",
+            content: "我是内容",
+            price: 354
+        }, {
+            img: "",
+            title: "我是标题1",
+            content: "我是内容2",
+            price: 35451
+
+        }, {
+            img: "",
+            title: "我是标题3",
+            content: "我是内容3",
+            price: 31254
+
+        }, {
+            img: "",
+            title: "我是标题4",
+            content: "我是内容4",
+            price: 3154
+
+        }, {
+            img: "",
+            title: "我是标题5",
+            content: "我是内容5",
+            price: 3154
+
+        }, {
+            img: "",
+            title: "我是标题6",
+            content: "我是内容6",
+            price: 35124
+        }, {
+            img: "",
+            title: "我是标题7",
+            content: "我是内容7",
+            price: 123
+
+        }]
+        console.log(data)
+        var content = document.querySelector(".content")
+        var search = document.querySelector(".search")
+        var sort = document.querySelector("#sort")
+        sort.onchange = function () {
+            // console.log(1)
+            var a = data.slice().sort(function (a, b) {
+                return a.price - b.price
+            })
+
+            render(a)
+        }
+        search.onchange = function () {
+            var a = data.filter(function (item) {
+                return item.title.indexOf(search.value) !== -1 || item.content.indexOf(search.value) !== -1
+            })
+            render(a)
+        }
+        function render(arr) {
+            content.innerHTML = arr.map(function (item) {
+                return `
+                <dl>
+                    <dd>
+                        <img src="" alt="">
+                    </dd>
+                    <dt>
+                        <p>${item.title}</p>
+                        <p>${item.content}</p>
+                        <p>${item.price}</p>
+                    </dt>
+                </dl>
+                `
+            }).join("")
+            // console.log(a)
+        }
+
+        render(data)
+    </script>
+</body>
+
+</html>

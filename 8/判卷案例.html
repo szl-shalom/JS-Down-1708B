@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>判卷案例</title>
+    <style>
+        .container ul{
+            width: 350px;
+            padding: 15px;
+            min-height:300px;
+            background-color:#FFFFF0;
+            margin:20px;
+            display: block;
+            float: left;
+            border-radius: 5px;
+            border: 1px solid #bbb;
+        }
+        .container ul li{
+            display: block;
+            float: left;
+            width: 350px;
+            height: 35px;
+            line-height: 35px;
+            border-radius: 4px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            background-color:#EED2EE;
+            margin-bottom:10px;
+            user-select: none;
+            text-indent: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+        <ul class="student">
+            <p>未判卷学生</p>
+            <li>学生A</li>
+            <li>学生B</li>
+            <li>学生C</li>
+            <li>学生D</li>
+            <li>学生E</li>
+            <li>学生F</li>
+        </ul>
+    
+        <ul>
+            <p>不及格</p>
+        </ul>
+    
+        <ul>
+            <p>及格</p>
+        </ul>
+    </section>
+
+    <script>
+        function JudgeExam(selector){
+            // 被拖拽元素的容器
+            this.container = document.querySelector(selector);
+            // 是否允许元素被拖拽
+            this.isDrag = false;
+            // 记录被拖拽元素oleEle
+            this.oldEle = null;
+            // 记录临时元素tmpEle
+            this.tmpEle = null;
+            // 记录鼠标在元素上的位置
+            this.pos = {
+                _x: 0,
+                _y: 0
+            }
+
+            this.init = function(){
+                var that = this;
+                // 监听鼠标按下事件
+                this.container.addEventListener('mousedown', function(e){
+                    if (e.target.tagName == 'LI'){
+                        // 设置元素可以被拖拽
+                        that.isDrag = true;
+                        // 记录元素
+                        that.oldEle = e.target;
+                        // 克隆元素
+                        that.tmpEle = that.oldEle.cloneNode(true);
+
+                        // 记录鼠标在节点上的位置
+                        var elePos = that.oldEle.getBoundingClientRect();
+                        that.pos = {
+                            _x: e.pageX - elePos.left,
+                            _y: e.pageY - elePos.top
+                        }
+                        // 修改元素的定位为绝对定位
+                        that.tmpEle.style.position = 'absolute';
+                        that.tmpEle.style.left = elePos.left + 'px';
+                        that.tmpEle.style.top = elePos.top + 'px';
+                        that.tmpEle.style.background = '#FF8C69';
+
+                        // 把元素添加到容器里
+                        that.container.appendChild(that.tmpEle);
+                    }
+                })
+
+                // 鼠标移动事件
+                document.body.addEventListener('mousemove', function(e){
+                    if (that.isDrag){
+                        // 计算元素的位置
+                        var offsetTop =  e.pageY - that.pos._y,
+                            offsetLeft = e.pageX - that.pos._x;
+
+                        // 处理拖拽边界
+                        var pos = that.tmpEle.getBoundingClientRect();
+                        if (offsetTop < 0 ){
+                            offsetTop = 0;
+                        }else if(offsetTop > window.innerHeight - pos.height){
+                            offsetTop = window.innerHeight - pos.height;
+                        }
+                        if (offsetLeft < 0 ){
+                            offsetLeft = 0;
+                        }else if(offsetLeft > window.innerWidth - pos.width){
+                            offsetLeft = window.innerWidth - pos.width;
+                        }
+
+                        // 实现元素跟随
+                        that.tmpEle.style.top = offsetTop + 'px';
+                        that.tmpEle.style.left = offsetLeft + 'px';
+                        
+                        // 判断高亮区域
+                        var dists = Array.prototype.slice.call(document.querySelectorAll('ul'));
+                        dists.shift();
+                        dists.forEach(function(item, index){
+                            var pos = item.getBoundingClientRect();
+                            if (pos.left <= e.pageX && pos.top <= e.pageY && pos.left+pos.width >= e.pageX && pos.top+pos.height >= e.pageY){
+                                // 鼠标进入目标区域
+                                item.style.background = '#FFEFD5';
+                            }else{
+                                // 鼠标离开目标区域
+                                item.style.background = '#FFFFF0';
+                            }   
+                        })
+                    }
+                   
+                })
+
+                // 鼠标松开事件
+                document.body.addEventListener('mouseup', function(e){
+                    if (!that.isDrag){
+                        return;
+                    }
+                    // 判断高亮区域
+                    var dists = Array.prototype.slice.call(document.querySelectorAll('ul'));
+                    dists.shift();
+                    dists.forEach(function(item, index){
+                        var pos = item.getBoundingClientRect();
+                        if (pos.left <= e.pageX && pos.top <= e.pageY && pos.left+pos.width >= e.pageX && pos.top+pos.height >= e.pageY){
+                            // 鼠标进入目标区域
+                            item.style.background = '#FFEFD5';
+                            // 克隆元素到当前区域
+                            var tmpEle = that.oldEle.cloneNode(true);
+                            item.appendChild(tmpEle);
+                            // 删除原节点
+                            that.oldEle.parentNode.removeChild(that.oldEle);
+                        }    
+                        // 取消高亮
+                        item.style.background = '#FFFFF0';
+                    })
+                    // 删除临时节点
+                    that.tmpEle.parentNode.removeChild(that.tmpEle);
+                    // 设置容器不可拖拽
+                    that.isDrag = false;
+                })
+            }
+
+            // 初始化
+            this.init();
+        }
+
+        new JudgeExam('.student');
+    </script>
+</body>
+</html>

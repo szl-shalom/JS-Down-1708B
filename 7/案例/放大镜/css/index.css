@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.small-box {
+    height: 500px;
+    width: 500px;
+    border: 1px solid red;
+    position: relative;
+    float: left;
+
+}
+
+.small-box>img {
+    height: 100%;
+    width: 100%;
+}
+
+.small-box1 {
+    height: 200px;
+    width: 200px;
+    background: rgba(0, 0, 0, .2);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.big-box {
+    height: 500px;
+    width: 500px;
+    border: 1px solid red;
+    float: left;
+    margin-left: 50px;
+    display: none;
+
+}

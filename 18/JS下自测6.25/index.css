@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrap {
+    width: 600px;
+    margin: auto;
+}
+
+.search {
+    width: 320px;
+    height: 35px;
+}
+
+.top span {
+    padding: 20px;
+    display: inline-block;
+}
+
+.content>div {
+    float: left;
+    border-right: 1px solid #ccc;
+    padding-right: 20px;
+    width: 20%;
+}
+
+.content>div>span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    line-height: 35px;
+}
+
+.clear {
+    clear: both;
+}
+
+.active {
+    background: red;
+}

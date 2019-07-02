@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .div {
+        height: 500px;
+        width: 500px;
+        margin-left: 100px;
+        background: red
+    }
+
+    .div1 {
+        width: 100px;
+        height: 100px;
+        margin-left: 50px;
+        background: yellow
+    }
+</style>
+
+<body>
+    <div class="div">
+        <div class="div1">
+
+        </div>
+    </div>
+
+    <script>
+        var div1 = document.querySelector(".div1")
+
+        console.log(div1.offsetWidth, div1.offsetHeight)
+        console.log(div1.offsetLeft, div1.offsetTop)
+        
+
+    </script>
+</body>
+
+</html>

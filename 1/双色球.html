@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        span {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: red;
+            line-height: 100px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        span:nth-child(7),
+        span:nth-child(6) {
+            background: blue;
+        }
+    </style>
+</head>
+
+
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+<button id="start">摇一摇</button>
+<button id="stop">停止</button>
+
+<body>
+    <script>
+        var arr = []
+        var btnStart = document.querySelector("#start")
+        var btnStop = document.querySelector("#stop")
+        var timer
+        btnStart.onclick = function () {
+            btnStart.disabled = true
+            timer = setInterval(function () {
+                while (true) {
+                    var sum = random(1, 32)
+                    if (arr.indexOf(sum) === -1) {
+                        arr.push(sum)
+                    }
+
+                    if (arr.length === 7) {
+                        break;
+                    }
+                }
+
+                var spans = [...document.querySelectorAll("span")]
+
+                spans.forEach(function (item, index) {
+                    item.innerHTML = arr[index]
+                })
+                arr = []
+            }, 1000)
+        }
+
+
+        btnStop.onclick = function () {
+            btnStart.disabled = false
+            clearInterval(timer)
+        }
+        function random(n, m) {
+            return Math.floor(Math.random() * (m - n + 1) + n)
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

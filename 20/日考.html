@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+
+</head>
+
+<body>
+    <dl>
+        <dt>
+            <img src="" alt="">
+        </dt>
+        <dd>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </dd>
+    </dl>
+    <script>
+        var arr = [{
+            img: "",
+            title: "",
+            conent: "",
+            curPrice: 1,
+            prevPrice: 2,
+            count: 64,
+        }, {
+            img: "",
+            title: "",
+            conent: "",
+            curPrice: 1,
+            prevPrice: 2,
+            count: 64,
+        }, {
+            img: "",
+            title: "",
+            conent: "",
+            curPrice: 1,
+            prevPrice: 2,
+            count: 64,
+        }, {
+            img: "",
+            title: "",
+            conent: "",
+            curPrice: 1,
+            prevPrice: 2,
+            count: 64,
+        }]
+
+        document.body.innerHTML = arr.map(function (item) {
+            return `
+            <dl>
+                <dt>
+                    <img src=${item.img} alt="">
+                </dt>
+                <dd>
+                    <p>${item.title}</p>
+                    <p>${item.conent}</p>
+                    <p>${item.curPrice}</p>
+                    <p>${item.prevPrice}</p>
+                    <p>${item.count}</p>
+                </dd>
+            </dl>`
+        }).join("")
+
+    </script>
+</body>
+
+</html>

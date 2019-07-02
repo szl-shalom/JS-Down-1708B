@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="h1"></h1>
+    <ul id="ul">
+       
+    </ul>
+    <input type="text">
+    <button id="submit">提交</button>
+
+    <script>
+        // 观察者模式 / 消息机制 / 发布-订阅者模式
+        var Observer = (function () {
+            var _message = {};
+            return {
+                // 注册消息接口
+                regist: function (type, fn) {
+                    if (typeof _message[type] === "undefined") {
+                        _message[type] = [fn]
+                    } else {
+                        _message[type].push(fn)
+                    }
+                    return this
+                },
+                // 发布消息接口
+                publish: function (type, args) {
+                    if (!_message[type]) {
+                        return
+                    }
+                    var events = {
+                        type: type,
+                        args: args || {},
+                    }, i = 0, len = _message[type].length;
+                    for (; i < len; i++) {
+                        _message[type][i].call(this, events)
+                    }
+                    return this
+
+                },
+                // 删除消息接口
+                remove: function (type, fn) {
+                    if (!_message[type]) {
+                        return;
+                    }
+                    var i = _message[type].length - 1;
+                    for (; i > 0; i--) {
+                        _message[type] === fn && _message[type].splice(i, 1)
+                    }
+                    return this
+
+                }
+            }
+        })();
+        // 工程师一   添加数据
+        (function () {
+            function addMessageItem(e) {
+                var text = e.args.text,
+                    ul = document.getElementById('ul'),
+                    li = document.createElement('li'),
+                    span = document.createElement('span');
+                span.innerHTML = "删除";
+                span.onclick = function () {
+                    Observer.publish("removeMessageItem", {
+                        num: -1
+                    })
+                    ul.removeChild(li)
+                }
+                li.innerHTML = text;
+                li.appendChild(span);
+                ul.appendChild(li);
+            }
+            Observer.regist("addMessageItem", addMessageItem)
+        })();
+        // 工程师二  改变数据
+        (function () {
+            function changeMessageItem(e) {
+                var num = e.args.num;
+                document.getElementById("h1").innerHTML = +document.getElementById("h1").innerHTML + num
+            }
+            Observer.regist("addMessageItem", changeMessageItem).regist("removeMessageItem", changeMessageItem)
+        })();
+        // 用户操作
+        (function () {
+            var submit = document.getElementById("submit"),
+                input = document.getElementsByTagName('input')[0]
+            submit.onclick = function () {
+                Observer.publish("addMessageItem", {
+                    text: input.value,
+                    num: 1
+                })
+            }
+        })();
+    </script>
+</body>
+
+</html>

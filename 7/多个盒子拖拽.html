@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            height: 100px;
+            width: 100px;
+            background: red;
+            position: absolute;
+            left: 10px;
+        }
+
+        div:nth-child(2) {
+            top: 110px;
+        }
+
+        div:nth-child(3) {
+            top: 220px;
+        }
+
+        div:nth-child(4) {
+            top: 330px;
+        }
+
+        div:nth-child(5) {
+            top: 440px;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <script>
+        var div = [...document.querySelectorAll("div")],
+            flag = false,
+            pos = null,
+
+
+            
+            ele = null;
+        document.onmousedown = function (e) {
+            if (e.target.nodeName === "DIV") {
+                ele = e.target
+                ele
+                flag = true
+                pos = {
+                    x: e.offsetX,
+                    y: e.offsetY
+                }
+            }
+        }
+        document.onmousemove = function (e) {
+            if (flag) {
+                var left = e.pageX - pos.x,
+                    top = e.pageY - pos.y
+
+                ele.style.left = left + "px"
+                ele.style.top = top + "px"
+            }
+        }
+        document.onmouseup = function () {
+            flag = false
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#red{
+			padding:100px;
+			background: red;
+		}
+
+		#green{
+			padding:100px;
+			background:green;
+		}
+
+		#blue{
+			padding:100px;
+			background:blue;
+		}
+	</style>
+</head>
+<body>
+	<div id="red">
+		<div id="green">
+			<div id="blue">
+
+			</div>
+		</div>
+	</div>
+	<script>
+	//事件流:事件流描述的是从页面中接收事件的顺序 
+	//分为三个阶段: 
+	//捕获阶段 ==> 目标阶段 ==> 冒泡阶段 
+	//捕获:由不具体到具体 ==> 外到内
+	//冒泡:由具体到不具体 ==> 内到外
+	
+	//事件对象.stopPropagation() ==> 在非IE下阻止冒泡
+	//事件对象.cancelBubble = true; ==> 在IE下阻止冒泡
+	// red.addEventListener('click',function(){
+	// 	alert('我是红色');
+	// })
+
+	green.onclick = function(event){
+		var e = event || window.event;
+		if(e.stopPropagation){ //阻止冒泡的兼容写法
+			e.stopPropagation();
+		}else{
+			e.cancelBubble = true;
+		}
+	}
+
+	/*blue.addEventListener('click',function(){
+		
+		alert('我是蓝色');
+	})*/
+
+	</script>
+</body>
+</html>

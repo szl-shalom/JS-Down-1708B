@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        body{
+            float: left;
+            display: inline-block;
+        }
+    
+    </style>
+
+</head>
+
+<body>
+    <div>用户名<input type="text" placeholder="6-30数字字母下划线 必须字母开头" reg="regUsername"><span>正确</span> </div>
+    <div>密码<input type="text" placeholder="6-20数字，字母，符号" reg="regPass"><span>正确</span> </div>
+    <div>确认密码<input type="text" placeholder="6-30数字字母下划线 必须字母开头" class="dywr"><span>正确</span> </div>
+    <div>邮箱<input type="text" placeholder="邮箱" reg="regEmail"><span>正确</span> </div>
+    <div>身份证<input type="text" placeholder="18位" reg="regUse"><span>正确</span> </div>
+    <div>手机号<input type="text" placeholder="11为" reg="regPhone"><span>正确</span> </div>
+    <div>姓名<input type="text" placeholder="2-4个汉字" reg="regName"><span>正确</span> </div>
+    <script>
+        // var regName = /^[\u4e00-\u9fa5]{2,4}$/
+        // var regPhone = /^1[3-9]\d{9}$/
+        // var regUse = /^\d{17}(x|\d)$/
+        // var regEmail = /^\w+@\w+\.(con|com|net)$/
+        // var regPass = /^\w.{5,19}$/
+        // var regUsername = /^[a-zA-Z]\w{5,29}$/
+
+        var regObj = {
+            regName: /^[\u4e00-\u9fa5]{2,4}$/,
+            regPhone: /^1[3-9]\d{9}$/,
+            regUse: /^\d{17}(x|\d)$/,
+            regEmail: /^\w+@\w+\.(con|com|net)$/,
+            regPass: /^\w.{5,19}$/,
+            regUsername: /^[a-zA-Z]\w{5,29}$/,
+        }
+
+
+        var inputs = [...document.querySelectorAll("input")]
+
+        inputs.forEach(function (item) {
+            item.onblur = function () {
+                if (item.className === "dywr") {
+
+                } else {
+                    if (regObj[this.getAttribute("reg")].test(this.value)) {
+                        this.nextElementSibling.innerHTML = "正确"
+                    } else {
+                        this.nextElementSibling.innerHTML = "错误"
+                    }
+                }
+
+            }
+        })
+
+
+
+
+    </script>
+</body>
+
+</html>

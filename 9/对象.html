@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 什么是对象
+        // 是一组无序数据的集合
+
+        // 声明对象
+        var obj = {
+            name: "1707B",
+            count: 50,
+            sayCount: function () {
+                for (var i = 1; i <= this.count; i++) {
+                    console.log(i)
+                }
+            },
+            sayName: function () {
+
+
+                console.log(this)
+
+
+            }
+        } //对象字面量
+
+        // console.log(obj)
+        obj.sayName()
+        // obj.sayName()
+
+
+        // console.log(sayCount())
+
+        // this 执行期上下文环境
+
+
+    
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var Book = (function () {
+            // 静态私有变量
+            var num = 0;
+            //静态私有方法
+            var method = function () { }
+            // 创建类
+            var _book = function (newID, newNum) {
+                // 私有变量
+                var name, age;
+                //私有方法
+                var checkID = function () { }
+                // 特权方法
+                var setNum = function (val) { sum = val }
+                var getNum = function () { return num }
+                // 公有属性
+                this.id = newID
+                this.newNum = newNum
+                // 公有方法
+
+                // 构造器
+
+                // 构建原型
+                _book.prototype = {
+                    isJSBook: false,
+                    display: function () {
+                        console.log("display")
+                    }
+                }
+
+            }
+            return _book;
+        })()
+
+        var book = new Book(12, 100)
+        console.log(book)
+    </script>
+</body>
+
+</html>

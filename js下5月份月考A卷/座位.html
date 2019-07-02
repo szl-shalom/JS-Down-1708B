@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .wrap {
+            width: 700px;
+            margin: auto;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            float: left;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        ul li.active {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+    </div>
+    <div class="box">
+
+    </div>
+    <div class="allPrice">
+
+    </div>
+    <script>
+        var wrap = document.querySelector(".wrap")
+        var box = document.querySelector(".box")
+        var allPrice = document.querySelector(".allPrice")
+        var obj = {}
+        var arr = location.search.slice(1).split("&");
+        arr.forEach(function (item) {
+            var o = item.split("=")
+            obj[o[0]] = o[1]
+        })
+        console.log(obj)
+
+        var html = ``
+        for (var i = 1; i <= 10; i++) {
+            html += `<ul ind=${i}>`
+            for (var j = 1; j <= 10; j++) {
+                html += `<li ind=${j}></li>`
+            }
+            html += `</ul>`
+        }
+        wrap.innerHTML = html
+        wrap.onclick = function (e) {
+            var tar = e.target;
+            if (tar.tagName === "LI") {
+                var len = wrap.querySelectorAll(".active").length
+                if (len >= 5 && !tar.classList.contains("active")) {
+                    alert("超出上限")
+                } else {
+                    if (tar.classList.contains("active")) {
+                        tar.classList.remove("active")
+                        var spans = [...box.children]
+                        spans.forEach(function (item) {
+                            if (item.innerHTML === `${tar.parentNode.getAttribute("ind")}排${tar.getAttribute("ind")}座`) {
+                                item.remove()
+                            }
+                        })
+
+                    } else {
+                        tar.classList.add("active")
+                        var span = document.createElement("span")
+                        span.innerHTML = `${tar.parentNode.getAttribute("ind")}排${tar.getAttribute("ind")}座`
+                        box.appendChild(span)
+                    }
+                    var len = wrap.querySelectorAll(".active").length
+                    allPrice.innerHTML = len * obj.price
+
+                }
+
+
+            }
+        }
+
+    </script>
+</body>
+
+</html>

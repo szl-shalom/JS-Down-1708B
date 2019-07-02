@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="left">
+            <ul class="left-ul">
+                <li>
+                    <img src="./images/1.jpg" alt="">
+                    <dl>
+                        <dt>
+                            <img src="./images/1.jpg" alt="">
+                        </dt>
+                        <dd>
+                            <h2>大美女</h2>
+                            <p>粉丝</p>
+                            <p>内容</p>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <img src="./images/1.jpg" alt="">
+                    <dl>
+                        <dt>
+                            <img src="./images/1.jpg" alt="">
+                        </dt>
+                        <dd>
+                            <h2>大美女</h2>
+                            <p>粉丝</p>
+                            <p>内容</p>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <img src="./images/1.jpg" alt="">
+                    <dl>
+                        <dt>
+                            <img src="./images/1.jpg" alt="">
+                        </dt>
+                        <dd>
+                            <h2>大美女</h2>
+                            <p>粉丝</p>
+                            <p>内容</p>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="right-wrap">
+                <div>
+                    <img src="./images/1.jpg" alt="">
+                    <b>名字</b>
+                    <span>内容</span>
+                    <p><span>点赞</span><button>回复</button></p>
+                    <div>
+                        <img src="./images/1.jpg" alt="">
+                        <b>名字</b>
+                        <span>内容</span>
+                        <p><span>点赞</span><button>回复</button></p>
+                    </div>
+                </div>
+
+
+                <div>
+                    <img src="./images/1.jpg" alt="">
+                    <b>名字</b>
+                    <span>内容</span>
+                    <p><span>点赞</span><button>回复</button></p>
+                </div>
+            </div>
+            <input type="text" class="mym">
+        </div>
+    </div>
+
+    <script src="./js/data.js"></script>
+    <script src="./js/ins.js"></script>
+
+    <script>
+        new Ins({
+            box: ".wrap",
+            dataLeft: dataLeft,
+            dataRight: dataRight
+        })
+
+    </script>
+</body>
+
+</html>

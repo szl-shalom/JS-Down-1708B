@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+
+<body>
+    <span>-</span>1
+    <ul>
+        <li><span>-</span>2
+            <ul>
+                <li>
+                    <input type="checkbox">
+                    <span ind="1">三级菜单</span>
+                </li>
+                <li>
+                    <input type="checkbox">
+                    <span ind="2">三级菜单</span>
+                </li>
+                <li>
+                    <input type="checkbox">
+                    <span ind="3">三级菜单</span>
+                </li>
+            </ul>
+        </li>
+        <li>2</li>
+        <li>2</li>
+    </ul>
+
+
+    <h2></h2>
+
+    <script>
+
+        document.onclick = function (e) {
+            var tar = e.target //获取事件源
+            // 判断时间源是不是span标签
+            if (tar.nodeName === "SPAN") {
+                // 判断状态
+                if (tar.innerHTML === "-") {
+                    tar.innerHTML = "+"
+                    tar.nextElementSibling.style.display = "none"
+                    
+                } else {
+                    tar.innerHTML = "-"
+                    tar.nextElementSibling.style.display = "block"
+
+                }
+
+            }
+
+        }
+
+
+
+
+
+
+
+        // var arr = [{
+        //     title: "一级菜单",
+        //     children: [{
+        //         title: "二级菜单",
+        //         children: [{
+        //             title: "三级菜单",
+        //             children: []
+        //         }]
+        //     }]
+        // }]
+        // // render
+        // function render(data) {
+
+        // }
+
+        // render(arr)
+
+    </script>
+</body>
+
+</html>

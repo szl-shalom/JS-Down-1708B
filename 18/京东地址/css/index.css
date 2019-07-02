@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+.wrap {
+    width: 1000px;
+    margin: auto;
+}
+
+.wrap ul {
+    width: 100%;
+}
+
+.wrap ul li {
+    border: 1px solid #ccc;
+    padding: 20px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.wrap ul li .content {
+    font-size: 14px;
+
+}
+
+.wrap ul li .content .left {
+    width: 80px;
+    float: left;
+    text-align: right
+}
+
+.wrap ul li .content .right {
+    float: left;
+    margin-left: 20px;
+}
+
+.wrap ul li .content .right-fl {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+
+.wrap ul li .content .right-fl span {
+    display: inline-block;
+    padding: 20px;
+
+}
+
+.clear {
+    clear: both;
+}
+
+.box {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .3);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.alert {
+    position: absolute;
+    width: 600px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+}
+
+.alert input {
+    line-height: 35px;
+    width: 320px;
+}
+
+.alert button {
+    line-height: 35px;
+    width: 320px;
+}

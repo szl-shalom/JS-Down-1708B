@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>还剩<span id="count">140</span> 字</h1>
+    <textarea name="" id="ipt" cols="30" rows="10" class="red"></textarea>
+
+    <script>
+        // 获取dom元素
+        var count = document.querySelector("#count")
+        var ipt = document.querySelector("#ipt")
+        // 添加input事件
+        ipt.addEventListener("input", function () {
+            // 通过字符串的长度来判断
+            count.innerHTML = 140 - this.value.length
+            // 超过25的长度修改类名
+            this.value.length > 25 ? this.classList.remove("red") : this.classList.add("red")
+            // 剩余输入次数小于0
+            if (count.innerHTML <= 0) {
+                count.innerHTML = 0
+                this.value = this.value.slice(0, 140)
+            }
+        })
+    </script>
+</body>
+
+</html>

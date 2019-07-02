@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .wrap {
+        width: 500px;
+        margin: auto;
+    }
+
+    input {
+        width: 100%;
+        height: 35px;
+    }
+
+    ul {
+        width: 100%;
+    }
+
+    ul li {
+        margin-top: 8px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+    }
+</style>
+
+<body>
+    <div class="wrap">
+        <input type="text" placeholder="请输入搜索的内容">
+        <ul>
+            <!-- <li>Jquery</li> -->
+        </ul>
+    </div>
+    <script>
+        var arr = ["Jquery然后突然", "Jquery大", "Jquery千万人翁人", "Jquery委托人人"]
+        var ul = document.querySelector("ul")
+        var input = document.querySelector("input")
+        input.oninput = function () {
+            var val = this.value
+            if (val) {
+                ul.style.display = "block"
+                var arr1 = arr.filter(function (item) {
+                    return item.includes(val)
+                })
+                console.log(arr1)
+                render(arr1)
+            } else {
+                ul.style.display = "none"
+            }
+
+        }
+        function render(data) {
+            ul.innerHTML = data.map(function (item) {
+                return `<li>${item}</li>`
+            }).join("")
+        }
+    </script>
+</body>
+
+</html>

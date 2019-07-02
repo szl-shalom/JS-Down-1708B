@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+.wrap {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.swiper-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    width: 0;
+    height: 100%;
+    position: absolute;
+    /* left: 0; */
+    top: 0;
+    transition: all 2s;
+}
+
+.swiper-slide.active {
+    right: 0;
+    width: 100%;
+}
+
+.swiper-slide>img {
+    width: 100%;
+    height: 100%;
+}
+
+.pagination {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}
+
+.pagination ul {
+    width: 100%;
+    text-align: center;
+}
+
+.pagination ul li {
+    display: inline-block;
+    border: 1px solid #ccc;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+}
+
+.pagination ul li.active {
+    background: red;
+}
+
+.login {
+    position: absolute;
+    right: 20px;
+    bottom: 150px;
+    width: 500px;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.login .phone {
+    width: 100%;
+    height: 35px;
+    margin-bottom: 20px;
+}
+
+.login .code {
+    width: 80%;
+    height: 35px;
+    margin-bottom: 20px;
+
+}
+
+.login .getCode {
+    width: 18%;
+    height: 35px;
+    line-height: 35px;
+    margin-bottom: 20px;
+
+
+}
+
+.login .submit {
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    margin-bottom: 20px;
+
+}

@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.wrap {
+    width: 800px;
+    margin: auto;
+}
+
+
+.wrap>ul>li>span {
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    display: inline-block;
+}
+
+.active {
+    background: red;
+}
+
+.wrap>ul>li>img {
+    height: 80px;
+    width: 80px;
+}
+
+
+.wrap>ul>li>div {
+    display: inline-block;
+}
+
+.all-check {
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    display: inline-block;
+}

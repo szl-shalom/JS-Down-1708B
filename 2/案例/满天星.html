@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: #000;
+    }
+</style>
+
+<body>
+    <script>
+        // 获取当前可视区域大小
+        var w = window.innerWidth
+        var h = window.innerHeight
+        // 随机数
+        function random(n, m) {
+            return Math.floor(Math.random() * (m - n + 1) + n)
+        }
+        // 循环定时器
+        setInterval(function () {
+            // 随机背景颜色
+            var s = "#"
+            for (var i = 0; i < 6; i++) {
+                s += random(0, 15).toString(16)
+            }
+            document.body.style.background = s
+
+            // 创建img元素节点
+            var img = document.createElement("img")
+            // 修改路径
+            img.src = "./xingxing.png"
+            // 随机宽度
+            var imgWidth = random(10, 100)
+            img.style.width = imgWidth + "px"
+            // 随机位置
+            img.style.position = "absolute"
+            img.style.left = random(0, w - imgWidth) + "px"
+            img.style.top = random(0, h - imgWidth) + "px"
+
+            //添加的页面
+            document.body.appendChild(img)
+        }, 200)
+
+    </script>
+</body>
+
+</html>

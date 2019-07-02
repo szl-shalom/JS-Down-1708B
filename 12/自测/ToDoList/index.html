@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .bdy {
+        width: 500px;
+        height: 700px;
+        background: #eee;
+        margin: 100px auto;
+    }
+
+    .bdy>h1 {
+        text-align: center;
+        line-height: 50px;
+        margin-bottom: 50px;
+    }
+
+    #input {
+        width: 400px;
+        height: 50px;
+        border: 1px solid #bbb;
+        border-radius: 5%;
+        padding-left: 30px;
+        display: block;
+        font-size: 16px;
+        margin: 0 auto;
+        margin-bottom: 80px;
+    }
+
+    .wb {
+        padding: 0 50px;
+    }
+
+    .p {
+        line-height: 25px;
+
+    }
+
+    .wb .xz ul {
+        height: 40px;
+        width: 100%;
+        border-left: 2px solid #f00;
+        line-height: 50px;
+        margin-bottom: 10px;
+        padding-left: 5px;
+    }
+
+    .wb .xz .lan {
+        border-left: 2px solid #00f;
+    }
+
+    .wb .xz ul input {
+        margin-right: 5px;
+    }
+
+    .wb .xz ul li {
+        width: 50px;
+        height: 50px;
+        float: right;
+    }
+
+    .wb .xz ul .s {
+        text-decoration: line-through;
+    }
+</style>
+
+<body>
+    <div class="bdy">
+        <h1>ToDoList</h1>
+        <input type="text" name="" id="input" placeholder="回车添加待办事项">
+        <div class="wb">
+            <p class="p">进行中：<span class="span1">1</span>已完成：<span class="span2">0</span></p>
+            <div class="xz">
+                <ul><input type="checkbox"><span class="">现在开始</span>
+                    <li class="li">×</li>
+                </ul>
+            </div>
+
+
+
+        </div>
+    </div>
+    <script>
+        function ToDoList() {
+            // 获取dom元素
+            this.input = document.querySelector("#input")
+            this.xz = document.querySelector(".xz")
+            this.span1 = document.querySelector(".span1")
+            this.span2 = document.querySelector(".span2")
+            // 进行初始化
+            this.init()
+        }
+
+        ToDoList.prototype = {
+            constructor: ToDoList,
+            init: function () {
+                this.addEvent()
+            },
+            addEvent: function () {
+                // 添加键盘按下事件
+                var that = this
+                this.input.addEventListener("keydown", function (e) {
+                    if (e.keyCode === 13) {
+                        // 按下回车
+                        var html = `
+                        <ul><input type="checkbox"><span class="">${this.value}</span>
+                            <li class="li">×</li>
+                        </ul>
+                        `
+                        that.xz.innerHTML += html
+                        that.span1.innerHTML = that.xz.children.length
+                    }
+                })
+
+                this.xz.addEventListener("click", function (e) {
+                    var tar = e.target
+                    if (tar.nodeName === "LI") {
+                        tar.parentNode.parentNode.removeChild(tar.parentNode)
+                        that.span1.innerHTML = that.xz.children.length
+                        that.span2.innerHTML = that.xz.querySelectorAll("input:checked").length
+                    }
+                    if (tar.nodeName === "INPUT") {
+                        tar.nextElementSibling.classList.toggle("s")
+                        tar.parentNode.classList.toggle("lan")
+                        that.span2.innerHTML = that.xz.querySelectorAll("input:checked").length
+                    }
+
+                })
+            }
+        }
+
+
+        new ToDoList()
+    </script>
+</body>
+
+</html>

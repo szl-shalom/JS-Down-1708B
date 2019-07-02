@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 寄生组合继承
+
+
+        function inHeritObject(o) {
+            function F() { }
+            F.prototype = o
+            return new F
+        }
+        /**
+     * @description: 寄生式继承 
+     * @param {function} subClass 子类 
+     * @param {function} superClass 父类 
+     */
+        function inHeritPrototype(subClass, superClass) {
+            // 复制副本
+            var p = inHeritObject(superClass.prototype)
+            // 
+            p.constructor = subClass
+            // 
+            subClass.prototype = p
+
+        }
+
+        function SuperClass(name, age) {
+            this.name = name
+            this.age = age
+        }
+
+        SuperClass.prototype.getName = function () {
+            return this.name
+        }
+
+        function SubClass(name, age, id) {
+            SuperClass.call(this, name, age)
+            this.id = id
+        }
+
+        inHeritPrototype(SubClass, SuperClass)
+
+        SubClass.prototype.getID = function () {
+            return this.id
+        }
+
+        var a = new SubClass("史志龙", 23, 520)
+        console.log(a)
+
+    </script>
+</body>
+
+</html>

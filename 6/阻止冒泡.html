@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    div {
+        height: 500px;
+        width: 500px;
+        background: red
+    }
+
+    div>div {
+        width: 250px;
+        height: 250px;
+        background: yellow
+    }
+
+    div>div>div {
+        height: 100px;
+        width: 100px;
+        background: green;
+    }
+</style>
+
+<body>
+    <div class="q">
+        <div class="w">
+            <div class="e"></div>
+        </div>
+    </div>
+    <script>
+        var a = document.querySelector(".q"),
+            b = document.querySelector(".w"),
+            c = document.querySelector(".e");
+
+        a.onclick = function () {
+            console.log("大盒子")
+        }
+
+
+        c.onclick = function (e) {
+            e = e || window.event
+            console.log(e)
+            e.cancelBubble = true
+            console.log("小盒子")
+        }
+
+        b.onclick = function (e) {
+            console.log("中盒子")
+        }
+
+    </script>
+</body>
+
+</html>

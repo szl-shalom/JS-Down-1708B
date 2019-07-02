@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <ul class="ul">
+            <li>
+                <span class="check"></span>
+                <img src="./images/1.jpg" alt="">
+                <div>
+                    <p>标题</p>
+                    <p>￥<span>价钱</span></p>
+                </div>
+                <button class="del">删除</button>
+                <div>
+                    <button>-</button>
+                    <span>4</span>
+                    <button class="add">+</button>
+                </div>
+
+            </li>
+        </ul>
+
+        <div>
+            <span class="all-check"></span>
+            全选
+            <span class="check-count">数量</span>
+            <span class="all-price"></span>
+            <button>结算</button>
+        </div>
+    </div>
+
+    <script src="./data.js"></script>
+    <script src="./car.js"></script>
+    <script>
+        new Car({
+            data: data,
+            el: ".wrap"
+        })
+    </script>
+</body>
+
+</html>

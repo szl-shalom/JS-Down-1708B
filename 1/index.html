@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>后退</button>
+    <script>
+        document.getElementsByTagName("button")[0].onclick = function () {
+            history.back()
+        }
+
+
+        // BOM 什么是BOM
+        // 浏览器对象模型  browser object model
+        // location 存储地址信息
+        // location.href //存储路径信息
+        // location.search //存储?后面的信息
+        // location.hash //存储#后面的信息
+        // location.host //存储主机地址加端口号
+        // location.pathname //存储地址
+        // location.reload() //重新加载当前页面
+
+        // history 存储浏览器历史记录
+        // history.length //存储当前页面的历史记录
+        // history.back() //后退页面 相当于点击一下浏览器左箭头
+        // history.forword() //前进页面  相当于点击一下浏览器右箭头
+        // history.go(len)  //需要传递参数   len = 1  前进一页  len = -1  后退一页
+
+        // navigator 保存浏览器信息
+        // navigator.userAgent //浏览器版本信息
+
+        // window
+
+        // 系统弹出款3
+        // 系统提示框
+        // var a = alert(1)  
+        // console.log(a)
+        // 系统输入框
+        // prompt(2)
+        // // 点击确定：返回字符串类型 用户输入的数据
+        // // 点击取消：返回null
+        // // 系统确认框
+        // confirm(3)
+        // // 点击确定：返回true
+        // // 点击取消：返回flase
+
+        // 共同点 会阻断当前的代码执行 等待用户进一步操作继续执行
+
+
+        // 重点
+        // 间歇定时器  隔time毫秒执行一次fn （重复执行）
+        // setInterval(fn, time)
+        // var a = 1
+        // var timer = setInterval(function () {
+        //     document.write(a++)
+        //     if (a > 10) {
+        //         clearInterval(timer)
+        //     }
+        // }, 1000)
+
+        // 
+        // 延时定时器  隔time毫秒执行一次fn （只执行一次）
+        // setTimeout(fn, time)
+
+        // setTimeout(function () {
+        //     alert("我是2S之后执行")
+        // }, 2000)
+        // setTimeout(function () {
+        //     clearInterval(timer)
+        // },10000)
+
+        // var aa = setTimeout(function () {
+        //     console.log(1)
+        // }, 1000)
+
+        // clearTimeout(aa)
+
+
+    </script>
+</body>
+
+</html>

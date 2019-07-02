@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>无标题文档</title>
+	<style>
+		#box {
+			width: 100px;
+			height: 100px;
+			background: #f00;
+			position: absolute;
+			left: 0;
+			top: 50px;
+			transition: "all .1s";
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<input type="button" value="回放" id="btn" />
+	<div id="box"></div>
+	<script>
+		var box = document.querySelector("#box")
+		var input = document.querySelector("#btn")
+		var flag = false
+		var pos = null
+		var arr = []
+		var aa
+		box.onmousedown = function (e) {
+			flag = true
+			pos = {
+				x: e.offsetX,
+				y: e.offsetY
+			}
+			var count = 0
+			aa = setInterval(function () {
+				box.style.transform = `rotate(${count}deg)`
+				count += 1
+				if (count > 360) {
+					count = 0
+				}
+			}, 1)
+		}
+
+		document.onmousemove = function (e) {
+			if (flag) {
+				var left = e.pageX - pos.x,
+					top = e.pageY - pos.y
+				box.style.left = left + "px"
+				box.style.top = top + "px"
+				arr.push({
+					x: left,
+					y: top
+				})
+
+			}
+		}
+		document.onmouseup = function () {
+			flag = false
+			clearInterval(aa)
+		}
+
+		btn.onclick = function () {
+			var count = 0
+			var timer = setInterval(function () {
+				var obj = arr.pop()
+				box.style.left = obj.x + "px"
+				box.style.top = obj.y + "px"
+				box.style.transform = `rotate(${count}deg)`
+				count += 10
+				if (count > 360) {
+					count = 0
+				}
+				if (arr.length === 0) {
+					clearInterval(timer)
+					box.style.transform = `rotate(${0}deg)`
+				}
+			}, 20)
+		}
+
+	</script>
+</body>
+
+</html>

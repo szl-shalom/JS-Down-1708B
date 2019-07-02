@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var a = [{
+            name: 123,
+            age: 654,
+            a: function () {
+
+            },
+            arr: [5, 9, 7]
+        }]
+        var b = copyData(a)
+
+        console.log(a)
+        console.log(b)
+
+        // 深度克隆数据
+
+        function copyData(data) {
+            // 基本数据直接返回
+            if (typeof data !== "object") return data
+            // 进行克隆
+            var flag = Array.isArray(data)
+            var o = flag ? [] : {}
+            if (flag) {
+                // 说明是数组
+                data.forEach(function (item) {
+                    o.push(copyData(item))
+                })
+            } else {
+                // 是对象
+                for (var key in data) {
+                    o[key] = copyData(data[key])
+                }
+            }
+            return o
+        }
+
+        // var a = {}
+
+        // var b = copyData(a)
+
+
+
+
+
+
+        // var b = a.slice()
+        // console.log(a)
+        // console.log(b)w
+
+
+
+
+    </script>
+</body>
+
+</html>
